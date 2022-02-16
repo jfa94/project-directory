@@ -1,25 +1,28 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import styled from 'styled-components'
 
-import {SelectedProjectContext} from '../../../context/SelectedProjectContext'
 import ProjectSummary from './ProjectSummary'
 
-const list = [1, 2, 3, 4, 5]
+const newProject = {
+    'project99': {
+        'title': 'New Project',
+        'description': 'I am testing out how to add a new project',
+    }
+}
 
-function ProjectSelector() {
-    const [selectedProject, setSelectedProject] = useContext(SelectedProjectContext)
+function ProjectSelector({selection, changeSelection, projectsData, updateProjects}) {
 
     return <Container>
-            {list.map(i => {
-                return <ProjectSummary key={i}
-                                       id={i}
-                                       name="Project Name"
-                                       description="This is the description for a project"
-                                       selected={selectedProject === i}
-                                       setSelected={setSelectedProject}
-                />
-            })}
-        </Container>
+        {Object.keys(projectsData).map(key => <ProjectSummary key={key}
+                                                              id={key}
+                                                              name={projectsData[key].title}
+                                                              description={projectsData[key].description}
+                                                              selected={selection === key}
+                                                              setSelected={changeSelection}
+        />)}
+        <button onClick={() => updateProjects('add', newProject)}>Add project</button>
+        <button onClick={() => updateProjects('remove', 'project99')}>Remove project</button>
+    </Container>
 }
 
 const Container = styled.div`

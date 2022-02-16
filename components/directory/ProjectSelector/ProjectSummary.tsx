@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import Card from '../../shared/Card'
 
 interface Props {
-    id: number
+    id: string
     selected?: boolean
     name: string
     description: string
-    setSelected: (i: number) => void
+    setSelected: (i: string) => void
 }
 
 const ProjectSummary: FC<Props> = (props) => {
