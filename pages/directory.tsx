@@ -19,7 +19,6 @@ const Directory: FC<{}> = () => {
             setRenderTrigger(prevState => !prevState)
         } else if (action === 'remove' && typeof data === 'string') {
             // TODO: add PUT method
-            console.log(data)
             setProjectsData(prevState => {
                 const newObj = Object.assign({}, prevState)
                 delete newObj[data]

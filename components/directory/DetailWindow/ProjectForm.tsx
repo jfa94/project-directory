@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {FC, useReducer} from "react"
 
 import {Props} from "./propsInterface"
+import TagsInput from "./TagsInput";
 
 const reducer = (state, {field, value}) => {
     return {
@@ -29,6 +30,10 @@ const ProjectForm: FC<Props> = ({_id, data, updateProject}) => {
         dispatch({field: e.target.name, value: e.target.value})
     }
 
+    const syncTags = (newTags: string[]) => {
+        dispatch({field: 'tags', value: newTags})
+    }
+
     return <Container>
         <form onSubmit={handleSubmit} onKeyPress={handleKeyPress}>
             <div>
@@ -51,10 +56,7 @@ const ProjectForm: FC<Props> = ({_id, data, updateProject}) => {
                 <input id="endDate" name="endDate" type="date" value={endDate}
                        onChange={onChange}/>
             </div>
-            <div>
-                <p>Tags </p>
-                {/*TODO: add label picker*/}
-            </div>
+            <TagsInput tags={tags} syncTags={syncTags}/>
             <div>
                 <button onClick={() => updateProject('update', {[_id]: state})} type="button">Save Changes</button>
                 <button onClick={() => updateProject('remove', _id)} type="button">Delete project</button>
