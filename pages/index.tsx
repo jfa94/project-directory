@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import styled from 'styled-components'
+import Link from "next/link"
+import styled from "styled-components"
 
 export default function Home() {
     return <Link href='/directory' passHref>

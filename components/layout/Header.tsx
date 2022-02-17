@@ -1,7 +1,10 @@
+import {FC} from "react"
 import styled from "styled-components"
-import Link from 'next/link'
+import Link from "next/link"
 
-function Header() {
+interface Props {}
+
+const Header:FC<Props> = () => {
     return <CustomHeader>
         <Link href="/" passHref>
             <Logo>

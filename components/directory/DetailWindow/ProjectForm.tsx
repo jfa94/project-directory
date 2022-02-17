@@ -1,13 +1,7 @@
 import styled from "styled-components"
-import {useReducer, useState} from "react";
+import {FC, useReducer} from "react"
 
-interface Data {
-    title: string,
-    description: string,
-    startDate: string,
-    endDate: string,
-    tags: string[]
-}
+import {Props} from "./propsInterface"
 
 const reducer = (state, {field, value}) => {
     return {
@@ -16,7 +10,7 @@ const reducer = (state, {field, value}) => {
     }
 }
 
-function ProjectForm({data}) {
+const ProjectForm: FC<Props> = ({_id, data, updateProject}) => {
     const [state, dispatch] = useReducer(reducer, data)
     const {title, description, startDate, endDate, tags} = state
 
@@ -25,12 +19,18 @@ function ProjectForm({data}) {
         alert('submitted')
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && e.target.type != 'textarea') {
+            e.preventDefault()
+        }
+    }
+
     const onChange = (e) => {
         dispatch({field: e.target.name, value: e.target.value})
     }
 
     return <Container>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onKeyPress={handleKeyPress}>
             <div>
                 <label htmlFor="title">Title </label>
                 <input id="title" name="title" type="text" placeholder="Project Title" value={title}
@@ -44,7 +44,7 @@ function ProjectForm({data}) {
             <div>
                 <label htmlFor="startDate">Start Date </label>
                 <input id="startDate" name="startDate" type="date" value={startDate}
-                          onChange={onChange}/>
+                       onChange={onChange}/>
             </div>
             <div>
                 <label htmlFor="endDate">End Date </label>
@@ -52,8 +52,12 @@ function ProjectForm({data}) {
                        onChange={onChange}/>
             </div>
             <div>
-                <label htmlFor="tags">Tags </label>
+                <p>Tags </p>
                 {/*TODO: add label picker*/}
+            </div>
+            <div>
+                <button onClick={() => updateProject('update', {[_id]: state})} type="button">Save Changes</button>
+                <button onClick={() => updateProject('remove', _id)} type="button">Delete project</button>
             </div>
         </form>
     </Container>

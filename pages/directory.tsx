@@ -1,23 +1,26 @@
-import {useEffect, useState} from "react"
+import {FC, useEffect, useState} from "react"
 import styled from "styled-components"
 
 import ProjectSelector from "../components/directory/ProjectSelector/index"
 import DetailWindow from "../components/directory/DetailWindow/index"
 import {getDummyProjects} from "../api/dummyProjects"
 
-function Directory() {
-    const [projectData, setProjectData] = useState({})
+const Directory: FC<{}> = () => {
+    const [projectsData, setProjectsData] = useState({})
     const [selectedProject, setSelectedProject] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+    const [renderTrigger, setRenderTrigger] = useState(true)
 
-    const updateProjects: (action: 'add' | 'remove', data: {} | string) => void = (action, data) => {
-        if (action === 'add' && typeof data === 'object') {
+    const updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void = (action, data) => {
+        if (action === 'add' || 'update' && typeof data === 'object') {
             // TODO: add PUT method
-            setProjectData(prevState => Object.assign(prevState, data))
+            setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
+            setRenderTrigger(prevState => !prevState)
         } else if (action === 'remove' && typeof data === 'string') {
             // TODO: add PUT method
-            setProjectData(prevState => {
+            console.log(data)
+            setProjectsData(prevState => {
                 const newObj = Object.assign({}, prevState)
                 delete newObj[data]
                 return newObj
@@ -31,7 +34,7 @@ function Directory() {
     useEffect(() => {
         (async () => {
             const projects = await getDummyProjects()
-            setProjectData(projects)
+            setProjectsData(projects)
             setIsLoading(false)
         })()
     }, [])
@@ -39,14 +42,16 @@ function Directory() {
     return <Container>
         <ProjectSelectorSection>
             {isLoading ? <div>Loading...</div> : (
-                <ProjectSelector selection={selectedProject}
+                <ProjectSelector renderTrigger={renderTrigger}
+                                 selection={selectedProject}
                                  changeSelection={setSelectedProject}
-                                 projectsData={projectData}
+                                 projectsData={projectsData}
                                  updateProjects={updateProjects}
                 />)}
         </ProjectSelectorSection>
         <DetailWindowContainer>
-            <DetailWindow data={projectData[selectedProject]}/>
+            <DetailWindow key={selectedProject} _id={selectedProject} data={projectsData[selectedProject]}
+                          updateProjects={updateProjects}/>
         </DetailWindowContainer>
     </Container>
 }

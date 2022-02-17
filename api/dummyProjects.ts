@@ -1,5 +1,3 @@
-import {useEffect, useState} from "react"
-
 const projectList = {
     'project1': {
         title: 'Project example 1',

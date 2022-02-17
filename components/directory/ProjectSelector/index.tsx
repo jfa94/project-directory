@@ -1,7 +1,7 @@
-import {useState, useContext, useEffect} from 'react'
-import styled from 'styled-components'
+import {FC, Dispatch, SetStateAction} from "react"
+import styled from "styled-components"
 
-import ProjectSummary from './ProjectSummary'
+import ProjectSummary from "./ProjectSummary"
 
 const newProject = {
     'project99': {
@@ -10,9 +10,17 @@ const newProject = {
     }
 }
 
-function ProjectSelector({selection, changeSelection, projectsData, updateProjects}) {
+interface Props {
+    renderTrigger: boolean,
+    selection: string,
+    changeSelection: Dispatch<SetStateAction<string>>,
+    projectsData: object,
+    updateProjects: (action: 'add' | 'remove', data: {} | string) => void
+}
 
+const ProjectSelector: FC<Props> = ({selection, changeSelection, projectsData, updateProjects}) => {
     return <Container>
+        <button onClick={() => updateProjects('add', newProject)}>Add project</button>
         {Object.keys(projectsData).map(key => <ProjectSummary key={key}
                                                               id={key}
                                                               name={projectsData[key].title}
@@ -20,8 +28,6 @@ function ProjectSelector({selection, changeSelection, projectsData, updateProjec
                                                               selected={selection === key}
                                                               setSelected={changeSelection}
         />)}
-        <button onClick={() => updateProjects('add', newProject)}>Add project</button>
-        <button onClick={() => updateProjects('remove', 'project99')}>Remove project</button>
     </Container>
 }
 

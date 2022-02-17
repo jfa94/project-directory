@@ -1,15 +1,10 @@
+import {FC} from "react"
 import styled from "styled-components"
 
-interface Props {
-    title: string,
-    description: string,
-    startDate: string,
-    endDate: string,
-    tags: string[]
-}
+import {Props} from "./propsInterface"
 
-function ProjectDetail(props: Props) {
-    const {title, description, startDate, endDate, tags} = props
+const ProjectDetail:FC<Props> = ({data}) => {
+    const {title, description, startDate, endDate, tags} = data
 
     return <Container>
 

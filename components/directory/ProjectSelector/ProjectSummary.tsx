@@ -1,14 +1,14 @@
-import {FC} from 'react'
-import styled from 'styled-components'
+import {FC, Dispatch, SetStateAction} from "react"
+import styled from "styled-components"
 
-import Card from '../../shared/Card'
+import Card from "../../shared/Card"
 
 interface Props {
     id: string
     selected?: boolean
     name: string
     description: string
-    setSelected: (i: string) => void
+    setSelected: Dispatch<SetStateAction<string>>
 }
 
 const ProjectSummary: FC<Props> = (props) => {

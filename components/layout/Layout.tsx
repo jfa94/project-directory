@@ -1,9 +1,13 @@
-import Header from './Header'
-import styled from 'styled-components'
+import {FC} from "react"
+import styled from "styled-components"
 
-// import Footer from './Footer'
+import Header from "./Header"
+// import Footer from "./Footer"
 
-function Layout(props) {
+interface Props {
+    children: JSX.Element | null
+}
+const Layout:FC<Props> = (props) => {
     return <Wrapper>
         <Header/>
         {props.children}
