@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import Card from "../../shared/Card"
 import ProjectForm from "./ProjectForm"
-import ProjectDetail from "./ProjectDetail";
+import ProjectDetail from "./ProjectDetail"
 
 interface Props {
     _id: string,
@@ -12,15 +12,15 @@ interface Props {
 }
 
 const DetailWindow: FC<Props> = (props) => {
-    const [isEditing, setIsEditing] = useState(true)
+    const [isEditing, setIsEditing] = useState(false)
 
     return <Container>
         {!props.data ? <p style={{alignSelf: 'center'}}>Select a project</p> : (
             <Card>
                 {isEditing ? (
-                    <ProjectForm _id={props._id} data={props.data} updateProject={props.updateProjects}/>
+                    <ProjectForm _id={props._id} data={props.data} updateProject={props.updateProjects} setIsEditing={setIsEditing}/>
                 ) : (
-                    <ProjectDetail _id={props._id} data={props.data}/>
+                    <ProjectDetail _id={props._id} data={props.data} setIsEditing={setIsEditing} />
                 )}
             </Card>
         )}

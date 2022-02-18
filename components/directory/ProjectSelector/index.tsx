@@ -6,7 +6,7 @@ import ProjectSummary from "./ProjectSummary"
 const newProject = {
     'project99': {
         'title': 'New Project',
-        'description': 'I am testing out how to add a new project',
+        'tags': []
     }
 }
 

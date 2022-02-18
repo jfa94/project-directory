@@ -1,3 +1,5 @@
+import {Dispatch, SetStateAction} from "react"
+
 export interface Props {
     _id: string,
     data: {
@@ -7,5 +9,6 @@ export interface Props {
         endDate: string,
         tags: string[]
     },
+    setIsEditing: Dispatch<SetStateAction<boolean>>,
     updateProject?: (action: 'add' | 'update' | 'remove', data: {} | string) => void
 }
