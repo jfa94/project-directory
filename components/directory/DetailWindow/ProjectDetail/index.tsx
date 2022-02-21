@@ -1,6 +1,6 @@
 import {FC} from "react"
 
-import {Props} from "../propsInterface"
+import {DetailWindowProps} from "../../../../common/types"
 import {
     CustomLabel,
     CustomP,
@@ -10,7 +10,7 @@ import {
 } from "../styledComponents"
 import TagsDisplay from "./TagsDisplay"
 
-const ProjectDetail:FC<Props> = ({data, setIsEditing}) => {
+const ProjectDetail:FC<DetailWindowProps> = ({data, setIsEditing}) => {
     const {title, description, startDate, endDate, tags} = data
 
     return <LayoutContainer>

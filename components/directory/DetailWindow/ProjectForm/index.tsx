@@ -1,6 +1,6 @@
 import {FC, useReducer} from "react"
 
-import {Props} from "../propsInterface"
+import {DetailWindowProps} from "../../../../common/types"
 import TagsInput from "./TagsInput";
 import {
     CustomInput,
@@ -18,7 +18,7 @@ const reducer = (state, {field, value}) => {
     }
 }
 
-const ProjectForm: FC<Props> = ({_id, data, setIsEditing, updateProject}) => {
+const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProject}) => {
     const [state, dispatch] = useReducer(reducer, data)
     const {title, description, startDate, endDate, tags} = state
 

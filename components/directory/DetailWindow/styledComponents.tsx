@@ -37,7 +37,7 @@ export const CustomTextarea = styled.textarea`
 export const TagsField = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 2.3rem;
+  min-height: 2.3rem;
   gap: 0.2rem;
   align-items: center;
   border: solid 1px black;
@@ -63,6 +63,7 @@ export const DeleteIcon = styled(Image)`
 
 export const Input = styled.input`
   border: none;
+  flex-grow: 1;
 
   &:focus {
     outline: none;

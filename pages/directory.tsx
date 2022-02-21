@@ -9,10 +9,16 @@ const Directory: FC<{}> = () => {
     const [projectsData, setProjectsData] = useState({})
     const [selectedProject, setSelectedProject] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+    const [isEditing, setIsEditing] = useState(false)
     const [renderTrigger, setRenderTrigger] = useState(true)
 
     const updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void = (action, data) => {
-        if (action === 'add' || 'update' && typeof data === 'object') {
+        if (action === 'add') {
+            // TODO: add PUT method
+            setProjectsData(prevState => Object.assign(data, prevState))
+            setSelectedProject(Object.keys(data)[0])
+            setIsEditing(true)
+        } else if (action === 'update' && typeof data === 'object') {
             // TODO: add PUT method
             setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
@@ -30,6 +36,11 @@ const Directory: FC<{}> = () => {
         }
     }
 
+    const changeSelection = (newSelection: string) => {
+        setSelectedProject(newSelection)
+        setIsEditing(false)
+    }
+
     useEffect(() => {
         (async () => {
             const projects = await getDummyProjects()
@@ -43,14 +54,18 @@ const Directory: FC<{}> = () => {
             {isLoading ? <div>Loading...</div> : (
                 <ProjectSelector renderTrigger={renderTrigger}
                                  selection={selectedProject}
-                                 changeSelection={setSelectedProject}
+                                 changeSelection={changeSelection}
                                  projectsData={projectsData}
                                  updateProjects={updateProjects}
                 />)}
         </ProjectSelectorSection>
         <DetailWindowContainer>
-            <DetailWindow key={selectedProject} _id={selectedProject} data={projectsData[selectedProject]}
-                          updateProjects={updateProjects}/>
+            <DetailWindow key={selectedProject}
+                          _id={selectedProject}
+                          data={projectsData[selectedProject]}
+                          editingState={[isEditing, setIsEditing]}
+                          updateProjects={updateProjects}
+            />
         </DetailWindowContainer>
     </Container>
 }
@@ -65,7 +80,7 @@ const ProjectSelectorSection = styled.section`
   flex-basis: 25vw;
 `
 
-const DetailWindowContainer = styled.div`
+const DetailWindowContainer = styled.section`
   flex-basis: 75vw;
 `
 
