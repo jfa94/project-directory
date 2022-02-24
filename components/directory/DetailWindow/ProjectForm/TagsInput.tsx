@@ -15,7 +15,7 @@ const TagsInput: FC<Props> = ({tags, syncTags}) => {
     }
 
     const handleCreate = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && e.target.value !== '') {
             syncTags([...tags, e.target.value])
             setInputVal('')
         }

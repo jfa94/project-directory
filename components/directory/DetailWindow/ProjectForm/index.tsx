@@ -24,7 +24,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        alert('submitted')
+        // alert('submitted')
     }
 
     const handleKeyPress = (e) => {

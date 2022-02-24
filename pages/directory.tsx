@@ -47,6 +47,10 @@ const Directory: FC<{}> = () => {
             setProjectsData(projects)
             setIsLoading(false)
         })()
+        return () => {
+            setProjectsData({})
+            setIsLoading(false)
+        }
     }, [])
 
     return <Container>
