@@ -2,8 +2,12 @@ import {Dispatch, SetStateAction} from "react"
 
 export interface ProjectProps {
     title: string,
-    category: 'project' | 'anecdote',
-    description: string,
+    category: 'Project' | 'Anecdote',
+    message: string,
+    context: string,
+    actions: string,
+    impact: string,
+    learnings: string,
     startDate: string,
     endDate: string,
     tags: string[],

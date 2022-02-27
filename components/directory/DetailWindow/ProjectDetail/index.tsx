@@ -2,37 +2,56 @@ import {FC} from "react"
 
 import {DetailWindowProps} from "../../../../common/types"
 import {
-    CustomLabel,
-    CustomP,
+    Label,
+    P,
     FullWidthDiv,
     HalfWidthDiv,
-    LayoutContainer
+    LayoutContainer, QuarterWidthDiv
 } from "../styledComponents"
 import TagsDisplay from "./TagsDisplay"
 
 const ProjectDetail:FC<DetailWindowProps> = ({data, setIsEditing}) => {
-    const {title, description, startDate, endDate, tags} = data
 
     return <LayoutContainer>
         <FullWidthDiv>
-            <CustomLabel>Title </CustomLabel>
-            <CustomP>{title}</CustomP>
-        </FullWidthDiv>
-        <FullWidthDiv>
-            <CustomLabel htmlFor="description">Description </CustomLabel>
-            <CustomP>{description}</CustomP>
+            <Label>Title </Label>
+            <P>{data.title}</P>
         </FullWidthDiv>
         <HalfWidthDiv>
-            <CustomLabel htmlFor="startDate">Start Date </CustomLabel>
-            <CustomP>{startDate}</CustomP>
+            <Label>Category </Label>
+            <P>{data.category}</P>
         </HalfWidthDiv>
-        <HalfWidthDiv>
-            <CustomLabel htmlFor="endDate">End Date </CustomLabel>
-            <CustomP>{endDate}</CustomP>
-        </HalfWidthDiv>
+        <QuarterWidthDiv>
+            <Label htmlFor="startDate">Start Date </Label>
+            <P>{data.startDate}</P>
+        </QuarterWidthDiv>
+        <QuarterWidthDiv>
+            <Label htmlFor="endDate">End Date </Label>
+            <P>{data.endDate}</P>
+        </QuarterWidthDiv>
         <FullWidthDiv>
-            <CustomLabel>Tags</CustomLabel>
-            <TagsDisplay tags={tags}/>
+            <Label htmlFor="message">Message </Label>
+            <P>{data.message}</P>
+        </FullWidthDiv>
+        <FullWidthDiv>
+            <Label htmlFor="context">Context </Label>
+            <P>{data.context}</P>
+        </FullWidthDiv>
+        <FullWidthDiv>
+            <Label htmlFor="actions">Actions </Label>
+            <P>{data.actions}</P>
+        </FullWidthDiv>
+        <FullWidthDiv>
+            <Label htmlFor="impact">Impact </Label>
+            <P>{data.impact}</P>
+        </FullWidthDiv>
+        <FullWidthDiv>
+            <Label htmlFor="learnings">Learnings </Label>
+            <P>{data.learnings}</P>
+        </FullWidthDiv>
+        <FullWidthDiv>
+            <Label>Tags</Label>
+            <TagsDisplay tags={data.tags}/>
         </FullWidthDiv>
         <FullWidthDiv>
             <button onClick={() => setIsEditing(prevState => !prevState)}>Edit</button>

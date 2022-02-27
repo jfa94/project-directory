@@ -3,34 +3,38 @@ import Image from "next/image"
 
 export const LayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
 `
 
 export const FullWidthDiv = styled.div`
-  grid-column: span 2;
+  grid-column: span 4;
 `
 
 export const HalfWidthDiv = styled.div`
+  grid-column: span 2;
+`
+
+export const QuarterWidthDiv = styled.div`
   grid-column: span 1;
 `
 
-export const CustomP = styled.p`
+export const P = styled.p`
   width: 100%;
   font-size: 1.2rem;
 `
 
-export const CustomLabel = styled.label`
+export const Label = styled.label`
   width: 100%;
   display: block;
 `
 
-export const CustomInput = styled.input`
+export const Input = styled.input`
   width: 100%;
   font-size: 1rem;
 `
 
-export const CustomTextarea = styled.textarea`
+export const Textarea = styled.textarea`
   width: 100%;
 `
 
@@ -61,7 +65,7 @@ export const DeleteIcon = styled(Image)`
   cursor: pointer;
 `
 
-export const Input = styled.input`
+export const CustomInput = styled.input`
   border: none;
   flex-grow: 1;
 

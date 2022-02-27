@@ -1,6 +1,6 @@
 import {FC, useState} from "react"
 
-import {TagsField, TagContainer, TagText, DeleteIcon, Input} from "../styledComponents"
+import {TagsField, TagContainer, TagText, DeleteIcon, CustomInput} from "../styledComponents"
 
 interface Props {
     tags: string[],
@@ -37,13 +37,13 @@ const TagsInput: FC<Props> = ({tags, syncTags}) => {
                 />
             </TagContainer>
         ))}
-        <Input id="tag"
-               name="newTag"
-               type="text"
-               placeholder="Press enter to add a tag"
-               value={inputVal}
-               onChange={handleInput}
-               onKeyPress={handleCreate}
+        <CustomInput id="tag"
+                     name="newTag"
+                     type="text"
+                     placeholder="Press enter to add a tag"
+                     value={inputVal}
+                     onChange={handleInput}
+                     onKeyPress={handleCreate}
         />
     </TagsField>
 }

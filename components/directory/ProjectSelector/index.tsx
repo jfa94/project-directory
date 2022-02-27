@@ -3,13 +3,12 @@ import styled from "styled-components"
 
 import ProjectSummary from "./ProjectSummary"
 import SearchBar from "./SearchBar"
-import {ProjectProps} from "../../../common/types";
 
 const newProject = {
     'project99': {
         'title': 'New Project',
-        'category': 'project',
-        'description': '',
+        'category': 'Project',
+        'context': '',
         'startDate': '',
         'endDate': '',
         'tags': []
@@ -37,7 +36,7 @@ const sortProjects = (data: object): Array<object | string[]> => {
         const searchTerms = [
             ...data[key].title.toLowerCase().split(' '),
             ...data[key].tags.map(tag => tag.toLowerCase())
-            , ...data[key].description.toLowerCase().split(' ')]
+            , ...data[key].context.toLowerCase().split(' ')]
 
         dataByYear[projectStartDate.getFullYear()].push({
             projectKey: key,
@@ -56,12 +55,10 @@ const sortProjects = (data: object): Array<object | string[]> => {
         return Number(b) - Number(a)
     })
 
-    console.log('data sorted')
-
     return [dataByYear, years]
 }
 
-const ProjectSelector: FC<Props> = ({selection, changeSelection, projectsData, updateProjects}) => {
+const ProjectSelector: FC<Props> = ({renderTrigger, selection, changeSelection, projectsData, updateProjects}) => {
     const [sortedData, setSortedData] = useState({})
     const [years, setYears] = useState<string[]>([])
     const [filterTerms, setFilterTerms] = useState<string[]>([])
@@ -70,7 +67,7 @@ const ProjectSelector: FC<Props> = ({selection, changeSelection, projectsData, u
         const [tempData, tempYears] = sortProjects(projectsData)
         setSortedData(tempData)
         setYears(tempYears as string[])
-    }, [projectsData])
+    }, [projectsData, renderTrigger])
 
     return <Container>
         <Controls>
@@ -85,10 +82,9 @@ const ProjectSelector: FC<Props> = ({selection, changeSelection, projectsData, u
                 }).map(({projectKey}) => {
                     return projectsData[projectKey] && <ProjectSummary key={projectKey}
                                                                        id={projectKey}
-                                                                       name={projectsData[projectKey].title}
-                                                                       description={projectsData[projectKey].description}
                                                                        selected={selection === projectKey}
                                                                        setSelected={changeSelection}
+                                                                       {...projectsData[projectKey]}
                     />
                 })}
             </div>

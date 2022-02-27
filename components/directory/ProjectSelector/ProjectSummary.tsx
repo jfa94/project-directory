@@ -2,20 +2,19 @@ import {FC, Dispatch, SetStateAction} from "react"
 import styled from "styled-components"
 
 import Card from "../../shared/Card"
+import {ProjectProps} from "../../../common/types"
 
-interface Props {
+interface Props extends ProjectProps {
     id: string
     selected?: boolean
-    name: string
-    description: string
     setSelected: Dispatch<SetStateAction<string>>
 }
 
 const ProjectSummary: FC<Props> = (props) => {
     return <Wrapper onClick={() => props.setSelected(props.id)}>
         <Card primary={props.selected}>
-            <h4>{props.name}</h4>
-            <p>{props.description}</p>
+            <h4>{props.title}</h4>
+            <p>{props.context}</p>
         </Card>
     </Wrapper>
 }
