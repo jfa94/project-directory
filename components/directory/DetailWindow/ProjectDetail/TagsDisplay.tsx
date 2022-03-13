@@ -1,6 +1,6 @@
 import {FC} from "react"
 
-import {TagsField, TagContainer, TagText} from "../styledComponents"
+import {TagsField, TagContainer, TagText} from "../../../shared/styledComponents"
 
 interface Props {
     tags: string[],

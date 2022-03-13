@@ -7,7 +7,7 @@ const Card = styled.div`
   padding: 1rem;
   flex: 1;
   border-radius: .5rem;
-  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.05);
   ${props => props.primary && css`
     color: white;
     background-color: dimgrey;

@@ -7,7 +7,7 @@ import {
     FullWidthDiv,
     HalfWidthDiv,
     LayoutContainer, QuarterWidthDiv
-} from "../styledComponents"
+} from "../../../shared/styledComponents"
 import TagsDisplay from "./TagsDisplay"
 
 const ProjectDetail:FC<DetailWindowProps> = ({data, setIsEditing}) => {

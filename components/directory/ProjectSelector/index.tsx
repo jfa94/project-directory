@@ -4,13 +4,16 @@ import styled from "styled-components"
 import ProjectSummary from "./ProjectSummary"
 import SearchBar from "./SearchBar"
 
+const today = new Date()
+const mm = today.getMonth() + 1
+const dd = today.getDate()
+
 const newProject = {
     'project99': {
         'title': 'New Project',
         'category': 'Project',
+        'startDate': `${today.getFullYear()}-${(mm>9 ? '' : '0') + mm}-${(dd>9 ? '' : '0') + dd}`,
         'context': '',
-        'startDate': '',
-        'endDate': '',
         'tags': []
     }
 }
@@ -76,17 +79,19 @@ const ProjectSelector: FC<Props> = ({renderTrigger, selection, changeSelection, 
         </Controls>
         {years.map(year => {
             return <div key={year}>
-                <h3>{year}</h3>
-                {sortedData[year].filter(project => {
-                    return filterTerms.length === 0 || !filterTerms.some(term => !project.searchTerms.includes(term.toLowerCase()))
-                }).map(({projectKey}) => {
-                    return projectsData[projectKey] && <ProjectSummary key={projectKey}
-                                                                       id={projectKey}
-                                                                       selected={selection === projectKey}
-                                                                       setSelected={changeSelection}
-                                                                       {...projectsData[projectKey]}
-                    />
-                })}
+                <h2>{year}</h2>
+                <ProjectContainer>
+                    {sortedData[year].filter(project => {
+                        return filterTerms.length === 0 || !filterTerms.some(term => !project.searchTerms.includes(term.toLowerCase()))
+                    }).map(({projectKey}) => {
+                        return projectsData[projectKey] && <ProjectSummary key={projectKey}
+                                                                           id={projectKey}
+                                                                           selected={selection === projectKey}
+                                                                           setSelected={changeSelection}
+                                                                           {...projectsData[projectKey]}
+                        />
+                    })}
+                </ProjectContainer>
             </div>
         })}
     </Container>
@@ -103,6 +108,12 @@ const Container = styled.div`
 
 const Controls = styled.div`
   display: flex;
+  gap: 0.75rem;
+`
+
+const ProjectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
 `
 

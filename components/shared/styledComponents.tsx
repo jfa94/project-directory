@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import Image from "next/image"
 
 export const LayoutContainer = styled.div`
@@ -21,11 +21,13 @@ export const QuarterWidthDiv = styled.div`
 
 export const P = styled.p`
   width: 100%;
-  font-size: 1.2rem;
+  margin: 0;
+  font-size: 1rem;
 `
 
 export const Label = styled.label`
   width: 100%;
+  font-weight: bold;
   display: block;
 `
 
@@ -44,8 +46,10 @@ export const TagsField = styled.div`
   min-height: 2.3rem;
   gap: 0.2rem;
   align-items: center;
-  border: solid 1px black;
-  padding: 0.3rem;
+  padding: 0.3rem 0;
+  border: ${props =>
+          props.editing ? 'solid 1px grey' : 'none'
+  }
 `
 
 export const TagContainer = styled.div`
@@ -53,7 +57,10 @@ export const TagContainer = styled.div`
   align-items: center;
   padding: 0.2rem;
   border-radius: 5px;
-  background-color: darkgrey;
+  background-color: ${props =>
+          props.primary ? 'darkgrey' : '#ebd1a9'
+  };
+
 `
 
 export const TagText = styled.span`
@@ -66,10 +73,10 @@ export const DeleteIcon = styled(Image)`
 `
 
 export const CustomInput = styled.input`
-  border: none;
-  flex-grow: 1;
+      border: none;
+      flex-grow: 1;
 
-  &:focus {
-    outline: none;
-  }
-`
+      &:focus {
+        outline: none;
+      }
+    `

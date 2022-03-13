@@ -1,9 +1,12 @@
-import {FC, useEffect, useState} from "react"
+import {FC, useContext, useEffect, useState} from "react"
 import styled from "styled-components"
+import {useRouter} from "next/router"
 
 import ProjectSelector from "../components/directory/ProjectSelector/index"
 import DetailWindow from "../components/directory/DetailWindow/index"
+import {Loading} from "../components/shared/Loading"
 import {getDummyProjects} from "../api/dummyProjects"
+import {AuthContext} from "../context/AuthContext"
 
 const Directory: FC<{}> = () => {
     const [projectsData, setProjectsData] = useState({})
@@ -11,6 +14,9 @@ const Directory: FC<{}> = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
     const [renderTrigger, setRenderTrigger] = useState(true)
+
+    const {user} = useContext(AuthContext)
+    const router = useRouter()
 
     const updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void = (action, data) => {
         if (action === 'add') {
@@ -43,19 +49,24 @@ const Directory: FC<{}> = () => {
 
     useEffect(() => {
         (async () => {
+            if (!user) {
+                await router.push('/')
+            }
+
             const projects = await getDummyProjects()
             setProjectsData(projects)
             setIsLoading(false)
         })()
+
         return () => {
             setProjectsData({})
             setIsLoading(false)
         }
-    }, [])
+    }, [user, router])
 
     return <Container>
         <ProjectSelectorSection>
-            {isLoading ? <div>Loading...</div> : (
+            {isLoading ? <Loading>Loading...</Loading> : (
                 <ProjectSelector renderTrigger={renderTrigger}
                                  selection={selectedProject}
                                  changeSelection={changeSelection}

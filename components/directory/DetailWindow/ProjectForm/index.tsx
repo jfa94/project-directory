@@ -9,7 +9,7 @@ import {
     FullWidthDiv,
     HalfWidthDiv,
     LayoutContainer, QuarterWidthDiv,
-} from "../styledComponents";
+} from "../../../shared/styledComponents"
 
 const reducer = (state, {field, value}) => {
     return {

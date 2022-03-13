@@ -1,10 +1,14 @@
-import {FC} from "react"
+import {FC, useContext} from "react"
 import styled from "styled-components"
 import Link from "next/link"
+
+import {AuthContext} from "../../context/AuthContext"
 
 interface Props {}
 
 const Header:FC<Props> = () => {
+    const {user, login, logout} = useContext(AuthContext)
+
     return <CustomHeader>
         <Link href="/" passHref>
             <Logo>
@@ -14,7 +18,10 @@ const Header:FC<Props> = () => {
         <Navigation>
             <Link href="/">Home</Link>
             <Link href="/directory">Directory</Link>
-            <Link href="/">Login</Link>
+            {user ?
+                <button onClick={logout}>Logout</button> :
+                <button onClick={login}>Login</button>
+            }
         </Navigation>
     </CustomHeader>
 }
@@ -38,7 +45,7 @@ const Navigation = styled.nav`
   display: flex;
   flex-direction: row;
 
-  a {
+  a, button {
     margin-left: 1rem;
   }
 `

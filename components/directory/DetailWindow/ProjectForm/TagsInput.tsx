@@ -1,6 +1,6 @@
 import {FC, useState} from "react"
 
-import {TagsField, TagContainer, TagText, DeleteIcon, CustomInput} from "../styledComponents"
+import {TagsField, TagContainer, TagText, DeleteIcon, CustomInput} from "../../../shared/styledComponents"
 
 interface Props {
     tags: string[],
@@ -25,7 +25,7 @@ const TagsInput: FC<Props> = ({tags, syncTags}) => {
         syncTags([...tags].filter(val => val != tag))
     }
 
-    return <TagsField>
+    return <TagsField editing>
         {tags.map((tag, index) => (
             <TagContainer key={index}>
                 <TagText>{tag}</TagText>
