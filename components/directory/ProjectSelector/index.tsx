@@ -109,6 +109,10 @@ const Container = styled.div`
 const Controls = styled.div`
   display: flex;
   gap: 0.75rem;
+  
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
 `
 
 const ProjectContainer = styled.div`

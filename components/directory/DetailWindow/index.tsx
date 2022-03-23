@@ -10,10 +10,17 @@ interface Props {
     _id: string,
     data: ProjectProps,
     updateProjects: (action: 'add' | 'remove', data: {} | string) => void,
+    changeSelection: (newSelection: string) => void,
     editingState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
-const DetailWindow: FC<Props> = ({_id, data, editingState, updateProjects}) => {
+const DetailWindow: FC<Props> = ({
+                                     _id,
+                                     data,
+                                     changeSelection,
+                                     editingState,
+                                     updateProjects
+                                 }) => {
     const [isEditing, setIsEditing] = editingState
 
     return <Container>
@@ -29,6 +36,7 @@ const DetailWindow: FC<Props> = ({_id, data, editingState, updateProjects}) => {
                     <ProjectDetail _id={_id}
                                    data={data}
                                    setIsEditing={setIsEditing}
+                                   changeSelection={changeSelection}
                     />
                 )}
             </Card>

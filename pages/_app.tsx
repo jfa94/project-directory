@@ -1,13 +1,16 @@
-import '../styles/globals.css'
+import GlobalStyle from "../styles/globalStyles"
 import {AuthProvider} from "../context/AuthContext"
 import Layout from "../components/layout/Layout"
 
 function MyApp({Component, pageProps}) {
-    return <AuthProvider>
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
-    </AuthProvider>
+    return <>
+        <GlobalStyle/>
+        <AuthProvider>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </AuthProvider>
+    </>
 }
 
 export default MyApp

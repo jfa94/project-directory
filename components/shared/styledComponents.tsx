@@ -13,10 +13,22 @@ export const FullWidthDiv = styled.div`
 
 export const HalfWidthDiv = styled.div`
   grid-column: span 2;
+
+  @media (max-width: 1000px) {
+    grid-column: span 4;
+  }
 `
 
 export const QuarterWidthDiv = styled.div`
   grid-column: span 1;
+
+  @media (max-width: 1000px) {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 650px) {
+    grid-column: span 4;
+  }
 `
 
 export const P = styled.p`
@@ -73,10 +85,10 @@ export const DeleteIcon = styled(Image)`
 `
 
 export const CustomInput = styled.input`
-      border: none;
-      flex-grow: 1;
+  border: none;
+  flex-grow: 1;
 
-      &:focus {
-        outline: none;
-      }
-    `
+  &:focus {
+    outline: none;
+  }
+`

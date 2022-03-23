@@ -17,5 +17,6 @@ export interface DetailWindowProps {
     _id: string,
     data: ProjectProps,
     setIsEditing: Dispatch<SetStateAction<boolean>>,
+    changeSelection?: (newSelection: string) => void,
     updateProject?: (action: 'add' | 'update' | 'remove', data: {} | string) => void
 }

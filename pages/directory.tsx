@@ -1,5 +1,5 @@
 import {FC, useContext, useEffect, useState} from "react"
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import {useRouter} from "next/router"
 
 import ProjectSelector from "../components/directory/ProjectSelector/index"
@@ -65,7 +65,7 @@ const Directory: FC<{}> = () => {
     }, [user, router])
 
     return <Container>
-        <ProjectSelectorSection>
+        <ProjectSelectorSection selectedProject={selectedProject}>
             {isLoading ? <Loading>Loading...</Loading> : (
                 <ProjectSelector renderTrigger={renderTrigger}
                                  selection={selectedProject}
@@ -74,11 +74,12 @@ const Directory: FC<{}> = () => {
                                  updateProjects={updateProjects}
                 />)}
         </ProjectSelectorSection>
-        <DetailWindowContainer>
+        <DetailWindowContainer selectedProject={selectedProject}>
             <DetailWindow key={selectedProject}
                           _id={selectedProject}
                           data={projectsData[selectedProject]}
                           editingState={[isEditing, setIsEditing]}
+                          changeSelection={changeSelection}
                           updateProjects={updateProjects}
             />
         </DetailWindowContainer>
@@ -93,10 +94,39 @@ const Container = styled.div`
 
 const ProjectSelectorSection = styled.section`
   flex-basis: 25vw;
+
+  @media (max-width: 1100px) {
+    flex-basis: 33vw;
+  }
+
+  @media (max-width: 650px) {
+    ${props => props.selectedProject === '' ? css`
+      display: block;
+      flex-basis: 100vw;
+    ` : css`
+      display: none;
+      flex-basis: 0;
+    `
+    }
 `
 
 const DetailWindowContainer = styled.section`
   flex-basis: 75vw;
+
+  @media (max-width: 1100px) {
+    flex-basis: 67vw;
+  }
+
+  @media (max-width: 650px) {
+    ${props => props.selectedProject === '' ? css`
+      display: none;
+      flex-basis: 0;
+    ` : css`
+      display: block;
+      flex-basis: 100vw;
+    `
+    }
+  }
 `
 
 export default Directory;

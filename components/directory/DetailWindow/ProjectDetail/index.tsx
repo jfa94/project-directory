@@ -6,16 +6,30 @@ import {
     P,
     FullWidthDiv,
     HalfWidthDiv,
-    LayoutContainer, QuarterWidthDiv
+    LayoutContainer,
+    QuarterWidthDiv,
+    DeleteIcon
 } from "../../../shared/styledComponents"
 import TagsDisplay from "./TagsDisplay"
+import styled from "styled-components"
 
-const ProjectDetail:FC<DetailWindowProps> = ({data, setIsEditing}) => {
-
+const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditing}) => {
     return <LayoutContainer>
         <FullWidthDiv>
-            <Label>Title </Label>
-            <P>{data.title}</P>
+            <TitleRow>
+                <div>
+                    <Label>Title </Label>
+                    <P>{data.title}</P>
+                </div>
+                <CloseIcon>
+                    <DeleteIcon src="/icons/close.svg"
+                                alt="close"
+                                height={25}
+                                width={25}
+                                onClick={() => changeSelection('')}
+                    />
+                </CloseIcon>
+            </TitleRow>
         </FullWidthDiv>
         <HalfWidthDiv>
             <Label>Category </Label>
@@ -58,5 +72,15 @@ const ProjectDetail:FC<DetailWindowProps> = ({data, setIsEditing}) => {
         </FullWidthDiv>
     </LayoutContainer>
 }
+
+const TitleRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+const CloseIcon = styled.div`
+  flex-shrink: 0;
+`
 
 export default ProjectDetail;
