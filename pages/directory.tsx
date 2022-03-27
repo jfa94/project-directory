@@ -95,7 +95,7 @@ const Container = styled.div`
 const ProjectSelectorSection = styled.section`
   flex-basis: 25vw;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1250px) {
     flex-basis: 33vw;
   }
 
@@ -113,7 +113,7 @@ const ProjectSelectorSection = styled.section`
 const DetailWindowContainer = styled.section`
   flex-basis: 75vw;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1250px) {
     flex-basis: 67vw;
   }
 
