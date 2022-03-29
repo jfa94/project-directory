@@ -3,11 +3,13 @@ import styled from "styled-components"
 import Link from "next/link"
 
 import {AuthContext} from "../../context/AuthContext"
+import {useRouter} from "next/router"
 
 interface Props {}
 
 const Header:FC<Props> = () => {
-    const {user, login, logout} = useContext(AuthContext)
+    const {user, logout} = useContext(AuthContext)
+    const router = useRouter()
 
     return <CustomHeader>
         <Link href="/" passHref>
@@ -20,7 +22,7 @@ const Header:FC<Props> = () => {
             <Link href="/directory">Directory</Link>
             {user ?
                 <button onClick={logout}>Logout</button> :
-                <button onClick={login}>Login</button>
+                <button onClick={() => router.push("/login")}>Login</button>
             }
         </Navigation>
     </CustomHeader>

@@ -50,7 +50,7 @@ const Directory: FC<{}> = () => {
     useEffect(() => {
         (async () => {
             if (!user) {
-                await router.push('/')
+                await router.push('/login')
             }
 
             const projects = await getDummyProjects()
