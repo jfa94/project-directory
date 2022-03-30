@@ -3,6 +3,7 @@ import {
     CognitoUserPool,
     CognitoUser
 } from 'amazon-cognito-identity-js'
+import {NextApiRequest, NextApiResponse} from "next"
 
 function authenticate(username: string, password: string) {
     const authenticationDetails = new AuthenticationDetails({
@@ -28,7 +29,7 @@ function authenticate(username: string, password: string) {
     })
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         try {
             const result = await authenticate(req.body.username, req.body.password)

@@ -1,11 +1,13 @@
-import {useContext, useState} from "react"
+import {FC, useContext, useState} from "react"
 import {useRouter} from "next/router"
 import styled from "styled-components"
 
 import Card from '../components/shared/Card'
 import {AuthContext} from "../context/AuthContext"
 
-function Login() {
+interface Props {}
+
+const Login: FC<Props> = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [waiting, setWaiting] = useState(false)
@@ -20,7 +22,8 @@ function Login() {
         const data = await login(email, password)
 
         if (data.success) {
-            await router.push('/')
+            const reroute = router.query.redirect ? router.query.redirect : '/'
+            await router.push(reroute as string)
         } else {
             setWaiting(false)
             console.log(data)
@@ -49,7 +52,8 @@ function Login() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                {waiting ? <SubmitButton disabled>...</SubmitButton> : <SubmitButton type="submit">Submit</SubmitButton>}
+                {waiting ? <SubmitButton disabled>...</SubmitButton> :
+                    <SubmitButton type="submit">Submit</SubmitButton>}
             </Form>
         </CardExtended>
     </FormContainer>

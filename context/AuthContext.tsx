@@ -1,11 +1,15 @@
-import React, {useState, createContext, useCallback} from "react"
+import React, {useState, createContext, useCallback, FC} from "react"
 
 const AuthContext = createContext(null)
 
-function AuthProvider(props) {
-    const [user, setUser] = useState(null)
+interface Props {
+    children: JSX.Element | null
+}
 
-    const login = useCallback(async (username: string, password: string) => {
+const AuthProvider: FC<Props> = ({children}) => {
+    const [user, setUser] = useState<{ id: string }>(null)
+
+    const login = useCallback(async (username: string, password: string): Promise<{}> => {
         const response = await fetch('api/auth/login', {
             method: 'POST',
             headers: {
@@ -29,7 +33,7 @@ function AuthProvider(props) {
         }
     }, [])
 
-    const logout = useCallback(async () => {
+    const logout = useCallback(async (): Promise<{}> => {
         const data = await fetch('api/auth/logout', {
             method: 'POST',
             headers: {
@@ -52,7 +56,7 @@ function AuthProvider(props) {
 
     return (
         <AuthContext.Provider value={{user, login, logout}}>
-            {props.children}
+            {children}
         </AuthContext.Provider>
     );
 }

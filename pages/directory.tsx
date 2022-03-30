@@ -8,7 +8,9 @@ import {Loading} from "../components/shared/Loading"
 import {getDummyProjects} from "../api/dummyProjects"
 import {AuthContext} from "../context/AuthContext"
 
-const Directory: FC<{}> = () => {
+interface Props {}
+
+const Directory: FC<Props> = () => {
     const [projectsData, setProjectsData] = useState({})
     const [selectedProject, setSelectedProject] = useState('')
     const [isLoading, setIsLoading] = useState(true)
@@ -50,7 +52,7 @@ const Directory: FC<{}> = () => {
     useEffect(() => {
         (async () => {
             if (!user) {
-                await router.push('/login')
+                await router.replace('/login?redirect=directory')
             }
 
             const projects = await getDummyProjects()

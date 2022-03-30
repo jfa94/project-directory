@@ -1,7 +1,10 @@
 import Link from "next/link"
 import styled from "styled-components"
+import {FC} from "react"
 
-export default function Home() {
+interface Props {}
+
+const Home: FC<Props> = () => {
     return <Link href='/directory' passHref>
         <Wrapper>
             Directory
@@ -16,3 +19,5 @@ const Wrapper = styled.div`
   border: 2px solid black;
   cursor: pointer;
 `
+
+export default Home;

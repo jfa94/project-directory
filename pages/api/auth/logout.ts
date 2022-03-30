@@ -1,4 +1,5 @@
 import {CognitoUserPool} from 'amazon-cognito-identity-js'
+import {NextApiRequest, NextApiResponse} from "next"
 
 function logout() {
     const userPool = new CognitoUserPool({
@@ -18,7 +19,7 @@ function logout() {
     })
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         try {
             await logout()

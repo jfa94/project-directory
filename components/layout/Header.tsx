@@ -5,11 +5,17 @@ import Link from "next/link"
 import {AuthContext} from "../../context/AuthContext"
 import {useRouter} from "next/router"
 
-interface Props {}
+interface Props {
+}
 
-const Header:FC<Props> = () => {
+const Header: FC<Props> = () => {
     const {user, logout} = useContext(AuthContext)
     const router = useRouter()
+
+    const handleLogout = async () => {
+        logout()
+        await router.push("/")
+    }
 
     return <CustomHeader>
         <Link href="/" passHref>
@@ -21,7 +27,10 @@ const Header:FC<Props> = () => {
             <Link href="/">Home</Link>
             <Link href="/directory">Directory</Link>
             {user ?
-                <button onClick={logout}>Logout</button> :
+                <>
+                    <Link href="/profile">Profile</Link>
+                    <button onClick={handleLogout}>Logout</button>
+                </> :
                 <button onClick={() => router.push("/login")}>Login</button>
             }
         </Navigation>
