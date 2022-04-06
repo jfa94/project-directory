@@ -1,24 +1,28 @@
-import {FC, useContext, useEffect, useState} from "react"
+import {FC, useEffect, useState} from "react"
 import styled, {css} from "styled-components"
-import {useRouter} from "next/router"
+import {useSession, signIn} from "next-auth/react"
 
 import ProjectSelector from "../components/directory/ProjectSelector/index"
 import DetailWindow from "../components/directory/DetailWindow/index"
 import {Loading} from "../components/shared/Loading"
 import {getDummyProjects} from "../api/dummyProjects"
-import {AuthContext} from "../context/AuthContext"
 
-interface Props {}
+interface Props {
+}
 
 const Directory: FC<Props> = () => {
+    const {data: session} = useSession({
+        required: true,
+        onUnauthenticated() {
+            signIn('cognito', {callbackUrl: '/directory'})
+        }
+    })
+
     const [projectsData, setProjectsData] = useState({})
     const [selectedProject, setSelectedProject] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
     const [renderTrigger, setRenderTrigger] = useState(true)
-
-    const {user} = useContext(AuthContext)
-    const router = useRouter()
 
     const updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void = (action, data) => {
         if (action === 'add') {
@@ -51,10 +55,6 @@ const Directory: FC<Props> = () => {
 
     useEffect(() => {
         (async () => {
-            if (!user) {
-                await router.replace('/login?redirect=directory')
-            }
-
             const projects = await getDummyProjects()
             setProjectsData(projects)
             setIsLoading(false)
@@ -64,7 +64,7 @@ const Directory: FC<Props> = () => {
             setProjectsData({})
             setIsLoading(false)
         }
-    }, [user, router])
+    }, [])
 
     return <Container>
         <ProjectSelectorSection selectedProject={selectedProject}>

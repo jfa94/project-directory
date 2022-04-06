@@ -1,21 +1,13 @@
-import {FC, useContext} from "react"
+import {FC} from "react"
 import styled from "styled-components"
+import {useSession, signOut, signIn} from "next-auth/react"
 import Link from "next/link"
-
-import {AuthContext} from "../../context/AuthContext"
-import {useRouter} from "next/router"
 
 interface Props {
 }
 
 const Header: FC<Props> = () => {
-    const {user, logout} = useContext(AuthContext)
-    const router = useRouter()
-
-    const handleLogout = async () => {
-        logout()
-        await router.push("/")
-    }
+    const {data: session} = useSession()
 
     return <CustomHeader>
         <Link href="/" passHref>
@@ -26,12 +18,12 @@ const Header: FC<Props> = () => {
         <Navigation>
             <Link href="/">Home</Link>
             <Link href="/directory">Directory</Link>
-            {user ?
+            {session ?
                 <>
                     <Link href="/profile">Profile</Link>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={() => signOut({callbackUrl: "/api/auth/logout"})}>Logout</button>
                 </> :
-                <button onClick={() => router.push("/login")}>Login</button>
+                <button onClick={() => signIn('cognito')}>Login</button>
             }
         </Navigation>
     </CustomHeader>

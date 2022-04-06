@@ -1,33 +1,8 @@
-import {CognitoUserPool} from 'amazon-cognito-identity-js'
-import {NextApiRequest, NextApiResponse} from "next"
-
-function logout() {
-    const userPool = new CognitoUserPool({
-        UserPoolId: process.env.COGNITO_USER_POOL_ID,
-        ClientId: process.env.COGNITO_CLIENT_ID,
-    })
-
-    const cognitoUser = userPool.getCurrentUser()
-
-    return new Promise((resolve, reject) => {
-        if (cognitoUser) {
-            cognitoUser.signOut()
-            resolve(true)
-        } else {
-            reject(false)
-        }
-    })
-}
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        try {
-            await logout()
-            res.status(200).json({success: 'successfully logged out'})
-        } catch (err) {
-            res.status(500).json({error: 'failed to log out'})
-        }
-    } else {
-        res.status(405).json({error: 'method not allowed'})
+export default async function logout(req, res) {
+    try {
+        await res.redirect(`https://${process.env.COGNITO_USER_POOL}.auth.${process.env.AWS_REGION}.amazoncognito.com/logout?client_id=${process.env.COGNITO_CLIENT_ID}&logout_uri=${process.env.CANONICAL_URL}/`);
+    } catch (error) {
+        console.error(error);
+        res.status(error.status || 400).end(error.message);
     }
 }

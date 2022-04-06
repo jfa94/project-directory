@@ -1,15 +1,15 @@
+import {SessionProvider} from "next-auth/react"
 import GlobalStyle from "../styles/globalStyles"
-import {AuthProvider} from "../context/AuthContext"
 import Layout from "../components/layout/Layout"
 
 function MyApp({Component, pageProps}) {
     return <>
-        <GlobalStyle/>
-        <AuthProvider>
+        <SessionProvider session={pageProps.session}>
+            <GlobalStyle/>
             <Layout>
                 <Component {...pageProps} />
             </Layout>
-        </AuthProvider>
+        </SessionProvider>
     </>
 }
 
