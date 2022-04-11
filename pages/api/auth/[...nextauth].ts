@@ -11,14 +11,71 @@ export default NextAuth({
         })
     ],
     callbacks: {
-        session: async function ({session, token}) {
-            session.user['sub'] = token.sub ?? session.sub
-            session.user['token'] = token.bearerToken ?? session.bearerToken
-            return session
+        async session({session, token}) {
+            return new Promise((Resolve, Reject) => {
+                session.user['bearerToken'] = token?.bearerToken
+                Resolve(session)
+            })
         },
         async jwt({token, account}) {
-            token.bearerToken = account?.id_token ?? token.bearerToken;
-            return token;
+            return new Promise(async (Resolve, Reject) => {
+                if (Date.now() > token?.expires) {
+                    const refreshedToken = await refreshAccessToken(token)
+                    // const account = {
+                    //     provider: 'cognito',
+                    //     type: 'oauth',
+                    //     providerAccountId: token.sub,
+                    //     id_token: refreshedToken.bearerToken,
+                    //     access_token: refreshedToken.accessToken,
+                    //     refresh_token: refreshedToken.refreshToken,
+                    //     expires_at: refreshedToken.bearerTokenExpires,
+                    //     token_type: 'Bearer',
+                    // }
+                    token.bearerToken = refreshedToken.bearerToken
+                    token.expires = refreshedToken.bearerTokenExpires
+                } else {
+                    token.bearerToken = account?.id_token ?? token.bearerToken
+                    token.refreshToken = account?.refresh_token ?? token.refreshToken
+                    token.expires = account?.expires_at ?? token.expires
+                }
+                Resolve(token)
+            })
         },
     },
 })
+
+async function refreshAccessToken(token) {
+    try {
+        const url = `https://${process.env.COGNITO_USER_POOL}.auth.${process.env.AWS_REGION}.amazoncognito.com/oauth2/token?` +
+            new URLSearchParams({
+                grant_type: "refresh_token",
+                client_id: process.env.COGNITO_CLIENT_ID,
+                client_secret: process.env.COGNITO_CLIENT_SECRET,
+                refresh_token: token.refreshToken,
+            })
+
+        const headerString = process.env.COGNITO_CLIENT_ID + ':' + process.env.COGNITO_CLIENT_SECRET
+        const buff = Buffer.from(headerString, 'utf-8')
+        const authHeader = buff.toString('base64')
+
+        const refreshedTokensResponse = await fetch(url, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic " + authHeader
+            },
+            method: "POST",
+        })
+
+        const refreshedTokens = await refreshedTokensResponse.json()
+        console.log('refreshedTokens', refreshedTokens)
+
+        return {
+            bearerToken: refreshedTokens.id_token,
+            accessToken: refreshedTokens.access_token,
+            bearerTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
+            refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+        }
+    } catch (error) {
+        return error
+    }
+}
