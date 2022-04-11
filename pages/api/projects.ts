@@ -4,47 +4,47 @@ import AWS from "aws-sdk"
 
 export default async function getProjects(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({req})
-    const login = `cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
 
-    if (session) {
+    if (session && ['GET', 'POST', 'PUT'].includes(req.method)) {
+        const login = `cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
+
         AWS.config.region = process.env.AWS_REGION
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: process.env.COGNITO_IDENTITY_POOL_ID,
             Logins: {
                 // @ts-ignore
-                [login]: session.user.token
+                [login]: session.user.bearerToken
             }
         })
-        // @ts-ignore
-        AWS.config.credentials.get(err => {
-            if (!err) {
-                const db = new AWS.DynamoDB.DocumentClient({region: process.env.AWS_REGION})
-                const params = {
-                    TableName: process.env.DYNAMODB_TABLE,
-                    KeyConditionExpression: "userid = :userId",
-                    ExpressionAttributeValues: {
-                        // @ts-ignore
-                        ":userId": `${process.env.AWS_REGION}:${session.user.sub}`
-                    }
-                }
-                console.log(params)
 
-                db.query(params, function (err, data) {
-                    if (err) {
-                        res.status(500).json({error: err})
-                    } else {
-                        res.status(200).json(data)
+        try {
+            // @ts-ignore
+            await AWS.config.credentials.getPromise()
+
+            const db = await new AWS.DynamoDB.DocumentClient({region: process.env.AWS_REGION})
+
+            switch (req.method) {
+                case 'GET':
+                    const params = {
+                        TableName: process.env.DYNAMODB_TABLE,
+                        KeyConditionExpression: "userid = :userId",
+                        // @ts-ignore
+                        ExpressionAttributeValues: {":userId": `${AWS.config.credentials.data.IdentityId}`}
                     }
-                })
-            } else {
-                res.status(500).json({error: err})
-                res.end()
+
+                    const data = await db.query(params).promise()
+                    res.status(200).json(data)
+                    break
+                case 'POST':
+
             }
-        })
+
+        } catch (err) {
+            res.status(err.statusCode).json({error: err})
+            res.end()
+        }
     } else {
-        res.status(403).json({
-            message: 'unauthorized'
-        })
+        res.status(403).json({error: 'unauthorized'})
         res.end()
     }
 }
