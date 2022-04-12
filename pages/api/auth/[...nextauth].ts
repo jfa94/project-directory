@@ -67,7 +67,6 @@ async function refreshAccessToken(token) {
         })
 
         const refreshedTokens = await refreshedTokensResponse.json()
-        console.log('refreshedTokens', refreshedTokens)
 
         return {
             bearerToken: refreshedTokens.id_token,
