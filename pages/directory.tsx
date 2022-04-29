@@ -24,14 +24,25 @@ const Directory: FC<Props> = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [renderTrigger, setRenderTrigger] = useState(true)
 
-    const updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void = (action, data) => {
+    const updateProjects: (
+        action: 'add' | 'update' | 'remove',
+        data: {} | string
+    ) => Promise<void> = async (action, data) => {
         if (action === 'add') {
             // TODO: add PUT method
             setProjectsData(prevState => Object.assign(data, prevState))
             setSelectedProject(Object.keys(data)[0])
             setIsEditing(true)
         } else if (action === 'update' && typeof data === 'object') {
-            // TODO: add PUT method
+            const response = await fetch('/api/projects', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({projectid: selectedProject, ...data[selectedProject]})
+            })
+            console.log(response)
+
             setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
             setRenderTrigger(prevState => !prevState)

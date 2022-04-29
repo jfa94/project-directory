@@ -32,34 +32,43 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     // @ts-ignore
                     params['ExpressionAttributeValues'] = {":userId": `${AWS.config.credentials.data.IdentityId}`}
 
-                    const data = await ddb.query(params).promise()
-                    const processed = {}
-                    data.Items.forEach(item => {
-                        processed[item.projectid] = {...item}
-                        delete processed[item.projectid].userid
-                        delete processed[item.projectid].projectid
-                    })
+                    try {
+                        const data = await ddb.query(params).promise()
+                        const processed = {}
+                        data.Items.forEach(item => {
+                            processed[item.projectid] = {...item}
+                            delete processed[item.projectid].userid
+                            delete processed[item.projectid].projectid
+                        })
 
-                    res.status(200).json(processed)
+                        res.status(200).json(processed)
+                    } catch (error) {
+                        res.status(error.statusCode).json({error: error})
+                    }
                     break
                 case 'PUT' :
-                    const formattedTags = req.body.tags.map(tag => {return {S: tag}})
                     params['Item'] = {
                         // @ts-ignore
-                        'userid': {S: AWS.config.credentials.data.IdentityId},
-                        'projectid': {S: req.body.projectid},
-                        'title': {S: req.body.title},
-                        'category': {S: req.body.category},
-                        'message': {S: req.body.message},
-                        'context': {S: req.body.context},
-                        'actions': {S: req.body.actions},
-                        'impact': {S: req.body.impact},
-                        'learnings': {S: req.body.learnings},
-                        'startDate': {S: req.body.startDate},
-                        'endDate': {S: req.body.endDate},
-                        'tags': {L: formattedTags},
+                        'userid': AWS.config.credentials.data.IdentityId,
+                        'projectid': req.body.projectid,
+                        'title': req.body.title,
+                        'category': req.body.category,
+                        'message': req.body.message,
+                        'context': req.body.context,
+                        'actions': req.body.actions,
+                        'impact': req.body.impact,
+                        'learnings': req.body.learnings,
+                        'startDate': req.body.startDate,
+                        'endDate': req.body.endDate,
+                        'tags': req.body.tags,
                     }
-                    // TODO: implement using ddb.putItem()
+                    try {
+                        // @ts-ignore
+                        const response = await ddb.put(params).promise()
+                        res.status(200).json(response)
+                    } catch (error) {
+                        res.status(error.statusCode).json({error: error})
+                    }
                     break
                 case 'DELETE':
                     // TODO: implement delete
