@@ -39,7 +39,7 @@ const ProjectSummary: FC<Props> = (props) => {
             </Headline>
             <Title>{props.title}</Title>
             <TagsField>
-                {props.tags.map((tag, index) => (
+                {props.tags && props.tags.map((tag, index) => (
                     <TagContainer key={index} primary={props.selected}>
                         <TagText>{tag}</TagText>
                     </TagContainer>

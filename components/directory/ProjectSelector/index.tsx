@@ -12,7 +12,7 @@ const newProject = {
     'project99': {
         'title': 'New Project',
         'category': 'Project',
-        'startDate': `${today.getFullYear()}-${(mm>9 ? '' : '0') + mm}-${(dd>9 ? '' : '0') + dd}`,
+        'startDate': `${today.getFullYear()}-${(mm > 9 ? '' : '0') + mm}-${(dd > 9 ? '' : '0') + dd}`,
         'context': '',
         'tags': []
     }
@@ -38,8 +38,9 @@ const sortProjects = (data: object): Array<object | string[]> => {
 
         const searchTerms = [
             ...data[key].title.toLowerCase().split(' '),
-            ...data[key].tags.map(tag => tag.toLowerCase())
-            , ...data[key].context.toLowerCase().split(' ')]
+            ...(data[key]?.tags || []).map(tag => tag.toLowerCase()),
+            ...(data[key]?.context?.toLowerCase() || '').split(' ')
+        ]
 
         dataByYear[projectStartDate.getFullYear()].push({
             projectKey: key,
@@ -109,7 +110,7 @@ const Container = styled.div`
 const Controls = styled.div`
   display: flex;
   gap: 0.75rem;
-  
+
   @media (max-width: 850px) {
     flex-direction: column;
   }

@@ -7,7 +7,7 @@ interface Props {
     syncTags: (newTags: string[]) => void
 }
 
-const TagsInput: FC<Props> = ({tags, syncTags}) => {
+const TagsInput: FC<Props> = ({tags = [], syncTags}) => {
     const [inputVal, setInputVal] = useState('')
 
     const handleInput = (e) => {

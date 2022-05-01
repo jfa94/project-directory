@@ -65,7 +65,7 @@ const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditi
         </FullWidthDiv>
         <FullWidthDiv>
             <Label>Tags</Label>
-            <TagsDisplay tags={data.tags}/>
+            {data.tags && <TagsDisplay tags={data.tags}/>}
         </FullWidthDiv>
         <FullWidthDiv>
             <button onClick={() => setIsEditing(prevState => !prevState)}>Edit</button>
