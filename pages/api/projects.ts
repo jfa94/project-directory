@@ -47,6 +47,8 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     }
                     break
                 case 'PUT' :
+                    // TODO: Add validation (e.g. has project name, start date)
+                    params['ReturnValues'] = 'ALL_OLD'
                     params['Item'] = {
                         // @ts-ignore
                         'userid': AWS.config.credentials.data.IdentityId,
@@ -65,13 +67,24 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     try {
                         // @ts-ignore
                         const response = await ddb.put(params).promise()
-                        res.status(200).json(response)
+                        res.status(response.Attributes ? 200 : 201).json({projectId: response.Attributes.projectid})
                     } catch (error) {
                         res.status(error.statusCode).json({error: error})
                     }
                     break
                 case 'DELETE':
-                    // TODO: implement delete
+                    params['Key'] = {
+                        // @ts-ignore
+                        'userid': AWS.config.credentials.data.IdentityId,
+                        'projectid': req.body.projectid
+                    }
+                    try {
+                        // @ts-ignore
+                        const response = await ddb.delete(params).promise()
+                        res.status(204).json({response: response})
+                    } catch (error) {
+                        res.status(error.statusCode).json({error: error})
+                    }
                     break
             }
         } catch (err) {

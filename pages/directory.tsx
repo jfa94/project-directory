@@ -47,7 +47,15 @@ const Directory: FC<Props> = () => {
             setSelectedProject(Object.keys(data)[0])
             setRenderTrigger(prevState => !prevState)
         } else if (action === 'remove' && typeof data === 'string') {
-            // TODO: add PUT method
+            const response = await fetch('/api/projects', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({projectid: selectedProject})
+            })
+            console.log(response)
+
             setProjectsData(prevState => {
                 const newObj = Object.assign({}, prevState)
                 delete newObj[data]
@@ -66,7 +74,8 @@ const Directory: FC<Props> = () => {
 
     useEffect(() => {
         (async () => {
-            const projects = await getDummyProjects()
+            const response = await fetch('/api/projects')
+            const projects = await response.json()
             setProjectsData(projects)
             setIsLoading(false)
         })()
