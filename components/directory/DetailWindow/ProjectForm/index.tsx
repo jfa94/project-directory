@@ -158,7 +158,9 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
             </FullWidthDiv>
             <FullWidthDiv>
                 <button onClick={handleSave} type="button">Save Changes</button>
-                <button onClick={() => updateProject('remove', _id)} type="button">Delete project</button>
+                {/*TODO: remove new projects from state if they are discarded*/}
+                <button onClick={() => setIsEditing(prevState => !prevState)}>Discard Changes</button>
+                <button onClick={() => updateProject('remove', _id)} type="button">Delete Project</button>
             </FullWidthDiv>
         </LayoutContainer>
     </form>
