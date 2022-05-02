@@ -58,7 +58,7 @@ export const TagsField = styled.div`
   min-height: 2.3rem;
   gap: 0.2rem;
   align-items: center;
-  padding: 0.3rem 0;
+  padding: 0.3rem;
   border: ${props =>
           props.editing ? 'solid 1px grey' : 'none'
   }
