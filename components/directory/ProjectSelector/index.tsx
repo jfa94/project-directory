@@ -7,12 +7,15 @@ import SearchBar from "./SearchBar"
 const today = new Date()
 const mm = today.getMonth() + 1
 const dd = today.getDate()
+const todayString = `${today.getFullYear()}-${(mm > 9 ? '' : '0') + mm}-${(dd > 9 ? '' : '0') + dd}`
 
+const newProjectId = `project${Date.now()}`
 const newProject = {
-    'project99': {
+    [newProjectId]: {
         'title': 'New Project',
         'category': 'Project',
-        'startDate': `${today.getFullYear()}-${(mm > 9 ? '' : '0') + mm}-${(dd > 9 ? '' : '0') + dd}`,
+        'startDate': todayString,
+        'endDate': todayString,
         'context': '',
         'tags': []
     }
