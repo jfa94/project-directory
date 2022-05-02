@@ -67,8 +67,9 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     try {
                         // @ts-ignore
                         const response = await ddb.put(params).promise()
-                        res.status(response.Attributes ? 200 : 201).json({projectId: response.Attributes.projectid})
+                        res.status(response.Attributes ? 200 : 201).json({projectId: response?.Attributes?.projectid ?? req.body.projectid})
                     } catch (error) {
+                        console.log(error)
                         res.status(error.statusCode).json({error: error})
                     }
                     break
@@ -80,8 +81,8 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     }
                     try {
                         // @ts-ignore
-                        const response = await ddb.delete(params).promise()
-                        res.status(204).json({response: response})
+                        await ddb.delete(params).promise()
+                        res.status(204).end()
                     } catch (error) {
                         res.status(error.statusCode).json({error: error})
                     }

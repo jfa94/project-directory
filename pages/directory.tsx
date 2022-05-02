@@ -29,7 +29,6 @@ const Directory: FC<Props> = () => {
         data: {} | string
     ) => Promise<void> = async (action, data) => {
         if (action === 'add') {
-            // TODO: add PUT method
             setProjectsData(prevState => Object.assign(data, prevState))
             setSelectedProject(Object.keys(data)[0])
             setIsEditing(true)
@@ -41,7 +40,8 @@ const Directory: FC<Props> = () => {
                 },
                 body: JSON.stringify({projectid: selectedProject, ...data[selectedProject]})
             })
-            console.log(response)
+            const responseData = await response.json()
+            console.log(responseData)
 
             setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
