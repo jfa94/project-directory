@@ -1,4 +1,4 @@
-import {Dispatch, FC, SetStateAction, useState} from "react"
+import {Dispatch, FC, FormEvent, SetStateAction, useState} from "react"
 import styled from "styled-components"
 
 interface Props {
@@ -8,8 +8,8 @@ interface Props {
 const SearchBar: FC<Props> = ({setFilterTerms}) => {
     const [value, setValue] = useState('')
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault()
         if (value === '') {
             setFilterTerms([])
         } else {
@@ -21,9 +21,9 @@ const SearchBar: FC<Props> = ({setFilterTerms}) => {
         <Input type='search'
                name='project-search'
                id='project-search'
-               ariaLabel='search for specific projects'
+               aria-label='search for specific projects'
                placeholder='Search projects...'
-               spellcheck={true}
+               spellCheck={true}
                value={value}
                onChange={e => {
                    e.target.value === '' && setFilterTerms([])

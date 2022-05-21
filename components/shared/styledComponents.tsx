@@ -52,7 +52,7 @@ export const Textarea = styled.textarea`
   width: 100%;
 `
 
-export const TagsField = styled.div`
+export const TagsField = styled.div<{editing: boolean}>`
   display: flex;
   flex-wrap: wrap;
   min-height: 2.3rem;
@@ -64,7 +64,7 @@ export const TagsField = styled.div`
   }
 `
 
-export const TagContainer = styled.div`
+export const TagContainer = styled.div<{primary: boolean}>`
   display: flex;
   align-items: center;
   padding: 0.2rem;

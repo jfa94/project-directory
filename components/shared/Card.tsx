@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components"
 
-const Card = styled.div`
+const Card = styled.div<{primary: boolean}>`
   display: flex;
   flex-direction: column;
   background-color: white;

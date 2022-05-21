@@ -1,4 +1,4 @@
-import {FC, useState} from "react"
+import {ChangeEvent, KeyboardEvent, FC, useState} from "react"
 
 import {TagsField, TagContainer, TagText, DeleteIcon, CustomInput} from "../../../shared/styledComponents"
 
@@ -10,18 +10,18 @@ interface Props {
 const TagsInput: FC<Props> = ({tags = [], syncTags}) => {
     const [inputVal, setInputVal] = useState('')
 
-    const handleInput = (e) => {
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputVal(e.target.value)
     }
 
-    const handleCreate = (e) => {
-        if (e.key === 'Enter' && e.target.value !== '') {
-            syncTags([...tags, e.target.value])
+    const handleCreate = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
+            syncTags([...tags, (e.target as HTMLInputElement).value])
             setInputVal('')
         }
     }
 
-    const handleDelete = (tag) => {
+    const handleDelete = (tag: string) => {
         syncTags([...tags].filter(val => val != tag))
     }
 

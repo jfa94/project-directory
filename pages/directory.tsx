@@ -5,6 +5,7 @@ import {useSession, signIn} from "next-auth/react"
 import ProjectSelector from "../components/directory/ProjectSelector/index"
 import DetailWindow from "../components/directory/DetailWindow/index"
 import {Loading} from "../components/shared/Loading"
+import {ProjectProps} from "../common/types"
 import {getDummyProjects} from "../api/dummyProjects"
 
 interface Props {
@@ -18,7 +19,7 @@ const Directory: FC<Props> = () => {
         }
     })
 
-    const [projectsData, setProjectsData] = useState({})
+    const [projectsData, setProjectsData] = useState<{ [id: string]: ProjectProps }>({})
     const [selectedProject, setSelectedProject] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
@@ -26,7 +27,7 @@ const Directory: FC<Props> = () => {
 
     const updateProjects: (
         action: 'add' | 'update' | 'remove',
-        data: {} | string
+        data: { [id: string]: ProjectProps } | string
     ) => Promise<void> = async (action, data) => {
         if (action === 'add') {
             setProjectsData(prevState => Object.assign(data, prevState))
@@ -114,7 +115,7 @@ const Container = styled.div`
   border-top: 1px solid whitesmoke;
 `
 
-const ProjectSelectorSection = styled.section`
+const ProjectSelectorSection = styled.section<{ selectedProject: string }>`
   flex-basis: 25vw;
 
   @media (max-width: 1250px) {
@@ -132,7 +133,7 @@ const ProjectSelectorSection = styled.section`
     }
 `
 
-const DetailWindowContainer = styled.section`
+const DetailWindowContainer = styled.section<{ selectedProject: string }>`
   flex-basis: 75vw;
 
   @media (max-width: 1250px) {

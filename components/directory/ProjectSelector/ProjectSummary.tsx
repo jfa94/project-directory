@@ -5,7 +5,7 @@ import Card from "../../shared/Card"
 import {ProjectProps} from "../../../common/types"
 import {TagContainer, TagsField, TagText} from "../../shared/styledComponents"
 
-const months = {
+const months: {[index: number]: string} = {
     0: 'January',
     1: 'February',
     2: 'March',
@@ -23,7 +23,7 @@ const months = {
 interface Props extends ProjectProps {
     id: string
     selected?: boolean
-    setSelected: Dispatch<SetStateAction<string>>
+    setSelected: (newSelection: string) => void
 }
 
 const ProjectSummary: FC<Props> = (props) => {
@@ -32,15 +32,15 @@ const ProjectSummary: FC<Props> = (props) => {
     const displayedDate = _date.getDate()
 
     return <Wrapper onClick={() => props.setSelected(props.id)}>
-        <Card primary={props.selected}>
+        <Card primary={props.selected ?? false}>
             <Headline>
                 <Category>{props.category}</Category>
                 <ProjectDate>{displayedDate} {displayedMonth}</ProjectDate>
             </Headline>
             <Title>{props.title}</Title>
-            <TagsField>
+            <TagsField editing={false}>
                 {props.tags && props.tags.map((tag, index) => (
-                    <TagContainer key={index} primary={props.selected}>
+                    <TagContainer key={index} primary={props.selected ?? false}>
                         <TagText>{tag}</TagText>
                     </TagContainer>
                 ))}

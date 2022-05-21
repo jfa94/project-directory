@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import ProjectSummary from "./ProjectSummary"
 import SearchBar from "./SearchBar"
+import {ProjectProps} from "../../../common/types"
 
 const today = new Date()
 const mm = today.getMonth() + 1
@@ -21,16 +22,18 @@ const newProject = {
     }
 }
 
-interface Props {
-    renderTrigger: boolean,
-    selection: string,
-    changeSelection: Dispatch<SetStateAction<string>>,
-    projectsData: object,
-    updateProjects: (action: 'add' | 'remove', data: {} | string) => void
+interface ProjectData {
+    projectKey: string,
+    startDate: Date,
+    searchTerms: string[]
 }
 
-const sortProjects = (data: object): Array<object | string[]> => {
-    const dataByYear = {}
+interface DataByYear {
+    [year: string]: ProjectData[]
+}
+
+const sortProjects = (data: { [id: string]: ProjectProps }): [DataByYear, string[]] => {
+    const dataByYear: DataByYear = {}
 
     Object.keys(data).forEach(key => {
         const projectStartDate = new Date(data[key].startDate === '' ? Date.now() : data[key].startDate)
@@ -52,9 +55,9 @@ const sortProjects = (data: object): Array<object | string[]> => {
         })
     })
 
-    Object.keys(dataByYear).forEach(key => {
+    Object.keys(dataByYear).forEach((key: string) => {
         dataByYear[key].sort((a, b) => {
-            return b.startDate - a.startDate
+            return b.startDate.getTime() - a.startDate.getTime()
         })
     })
 
@@ -65,8 +68,16 @@ const sortProjects = (data: object): Array<object | string[]> => {
     return [dataByYear, years]
 }
 
+interface Props {
+    renderTrigger: boolean,
+    selection: string,
+    changeSelection: (newSelection: string) => void,
+    projectsData: { [id: string]: ProjectProps },
+    updateProjects: (action: 'add' | 'remove', data: {} | string) => void
+}
+
 const ProjectSelector: FC<Props> = ({renderTrigger, selection, changeSelection, projectsData, updateProjects}) => {
-    const [sortedData, setSortedData] = useState({})
+    const [sortedData, setSortedData] = useState<DataByYear>({})
     const [years, setYears] = useState<string[]>([])
     const [filterTerms, setFilterTerms] = useState<string[]>([])
 

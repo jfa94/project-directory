@@ -26,7 +26,7 @@ const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditi
                                 alt="close"
                                 height={25}
                                 width={25}
-                                onClick={() => changeSelection('')}
+                                onClick={() => changeSelection ? changeSelection('') : console.warn('changeSelection not defined')}
                     />
                 </CloseIcon>
             </TitleRow>

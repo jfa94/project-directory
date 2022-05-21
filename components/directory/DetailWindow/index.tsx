@@ -4,12 +4,12 @@ import styled from "styled-components"
 import Card from "../../shared/Card"
 import ProjectForm from "./ProjectForm"
 import ProjectDetail from "./ProjectDetail"
-import {ProjectProps} from "../../../common/types";
+import {ProjectProps} from "../../../common/types"
 
 interface Props {
     _id: string,
     data: ProjectProps,
-    updateProjects: (action: 'add' | 'remove', data: {} | string) => void,
+    updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void,
     changeSelection: (newSelection: string) => void,
     editingState: [boolean, Dispatch<SetStateAction<boolean>>]
 }

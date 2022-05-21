@@ -1,6 +1,6 @@
-import {FC, useReducer} from "react"
+import {ChangeEvent, FC, FormEvent, KeyboardEvent, useReducer} from "react"
 
-import {DetailWindowProps} from "../../../../common/types"
+import {DetailWindowProps, ProjectProps} from "../../../../common/types"
 import TagsInput from "./TagsInput"
 import {
     Input,
@@ -11,7 +11,7 @@ import {
     LayoutContainer, QuarterWidthDiv,
 } from "../../../shared/styledComponents"
 
-const reducer = (state, {field, value}) => {
+const reducer = (state: ProjectProps, {field, value}: {field: string, value: (string | string[])}) => {
     return {
         ...state,
         [field]: value
@@ -21,19 +21,19 @@ const reducer = (state, {field, value}) => {
 const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProject}) => {
     const [state, dispatch] = useReducer(reducer, data)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         // alert('submitted')
     }
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && e.target.type != 'textarea') {
+    const handleKeyPress = (e: KeyboardEvent<HTMLFormElement>) => {
+        if (e.key === 'Enter' && (e.target as HTMLFormElement).type != 'textarea') {
             e.preventDefault()
         }
     }
 
-    const onChange = (e) => {
-        dispatch({field: e.target.name, value: e.target.value})
+    const onChange = (e: FormEvent<HTMLDivElement>) => {
+        dispatch({field: (e.target as HTMLFormElement).name, value: (e.target as HTMLFormElement).value})
     }
 
     const syncTags = (newTags: string[]) => {
@@ -41,7 +41,9 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
     }
 
     const handleSave = () => {
-        updateProject('update', {[_id]: state})
+        if (updateProject) {
+            updateProject('update', {[_id]: state})
+        }
         setIsEditing(prevState => !prevState)
     }
 
@@ -160,7 +162,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <button onClick={handleSave} type="button">Save Changes</button>
                 {/*TODO: remove new projects from state if they are discarded*/}
                 <button onClick={() => setIsEditing(prevState => !prevState)}>Discard Changes</button>
-                <button onClick={() => updateProject('remove', _id)} type="button">Delete Project</button>
+                <button onClick={() => updateProject && updateProject('remove', _id)} type="button">Delete Project</button>
             </FullWidthDiv>
         </LayoutContainer>
     </form>
