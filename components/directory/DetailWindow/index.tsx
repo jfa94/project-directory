@@ -25,7 +25,7 @@ const DetailWindow: FC<Props> = ({
 
     return <Container>
         {!data ? <p style={{alignSelf: 'center'}}>Select a project</p> : (
-            <Card>
+            <Card primary={false}>
                 {isEditing ? (
                     <ProjectForm _id={_id}
                                  data={data}

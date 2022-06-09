@@ -27,7 +27,7 @@ const TagsInput: FC<Props> = ({tags = [], syncTags}) => {
 
     return <TagsField editing>
         {tags.map((tag, index) => (
-            <TagContainer key={index}>
+            <TagContainer key={index} primary={false}>
                 <TagText>{tag}</TagText>
                 <DeleteIcon src="/icons/close-circle.svg"
                             alt="close"
