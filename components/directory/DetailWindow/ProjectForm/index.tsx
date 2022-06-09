@@ -11,7 +11,7 @@ import {
     LayoutContainer, QuarterWidthDiv,
 } from "../../../shared/styledComponents"
 
-const reducer = (state: ProjectProps, {field, value}: {field: string, value: (string | string[])}) => {
+const reducer = (state: ProjectProps, {field, value}: { field: string, value: (string | string[]) }) => {
     return {
         ...state,
         [field]: value
@@ -32,7 +32,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
         }
     }
 
-    const onChange = (e: FormEvent<HTMLDivElement>) => {
+    const onChange = (e: FormEvent<HTMLDivElement> | ChangeEvent<HTMLTextAreaElement>) => {
         dispatch({field: (e.target as HTMLFormElement).name, value: (e.target as HTMLFormElement).value})
     }
 
@@ -162,7 +162,8 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <button onClick={handleSave} type="button">Save Changes</button>
                 {/*TODO: remove new projects from state if they are discarded*/}
                 <button onClick={() => setIsEditing(prevState => !prevState)}>Discard Changes</button>
-                <button onClick={() => updateProject && updateProject('remove', _id)} type="button">Delete Project</button>
+                <button onClick={() => updateProject && updateProject('remove', _id)} type="button">Delete Project
+                </button>
             </FullWidthDiv>
         </LayoutContainer>
     </form>
