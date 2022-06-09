@@ -1,13 +1,15 @@
+// @ts-nocheck
 import NextAuth from "next-auth"
 import CognitoProvider from "next-auth/providers/cognito"
 
 export default NextAuth({
     providers: [
         CognitoProvider({
-            clientId: process.env.COGNITO_CLIENT_ID,
-            clientSecret: process.env.COGNITO_CLIENT_SECRET,
+            clientId: process.env.COGNITO_CLIENT_ID ?? '',
+            clientSecret: process.env.COGNITO_CLIENT_SECRET ?? '',
             issuer: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`,
             idToken: true,
+            authorization: {params: {scope: "openid aws.cognito.signin.user.admin"}},
         })
     ],
     callbacks: {
@@ -21,19 +23,12 @@ export default NextAuth({
             return new Promise(async (Resolve, Reject) => {
                 if (Date.now() > token?.expires) {
                     const refreshedToken = await refreshAccessToken(token)
-                    // const account = {
-                    //     provider: 'cognito',
-                    //     type: 'oauth',
-                    //     providerAccountId: token.sub,
-                    //     id_token: refreshedToken.bearerToken,
-                    //     access_token: refreshedToken.accessToken,
-                    //     refresh_token: refreshedToken.refreshToken,
-                    //     expires_at: refreshedToken.bearerTokenExpires,
-                    //     token_type: 'Bearer',
-                    // }
+                    token.accessToken = refreshedToken.accessToken
                     token.bearerToken = refreshedToken.bearerToken
+                    token.refreshToken = refreshedToken.refreshToken
                     token.expires = refreshedToken.bearerTokenExpires
                 } else {
+                    token.accessToken = account?.access_token ?? token.accessToken
                     token.bearerToken = account?.id_token ?? token.bearerToken
                     token.refreshToken = account?.refresh_token ?? token.refreshToken
                     token.expires = account?.expires_at ?? token.expires
