@@ -43,9 +43,10 @@ const sortProjects = (data: { [id: string]: ProjectProps }): [DataByYear, string
         }
 
         const searchTerms = [
-            ...data[key].title.toLowerCase().split(' '),
+            ...(data[key]?.title?.toLowerCase() || '').split(' '),
             ...(data[key]?.tags || []).map(tag => tag.toLowerCase()),
-            ...(data[key]?.context?.toLowerCase() || '').split(' ')
+            ...(data[key]?.message?.replace('.', '').toLowerCase() || '').split(' '),
+            ...(data[key]?.context?.replace('.', '').toLowerCase() || '').split(' ')
         ]
 
         dataByYear[projectStartDate.getFullYear()].push({

@@ -18,6 +18,7 @@ const Header: FC<Props> = () => {
         <Navigation>
             <Link href="/">Home</Link>
             <Link href="/directory">Directory</Link>
+            <Link href="/generator">Generator</Link>
             {session ?
                 <>
                     <Link href="/profile">Profile</Link>

@@ -8,8 +8,12 @@ import {
     Textarea,
     FullWidthDiv,
     HalfWidthDiv,
-    LayoutContainer, QuarterWidthDiv,
+    LayoutContainer,
+    QuarterWidthDiv
 } from "../../../shared/styledComponents"
+import Button from "../../../shared/Button"
+import HelpTooltip from "../../../shared/HelpTooltip"
+import styled from "styled-components"
 
 const reducer = (state: ProjectProps, {field, value}: { field: string, value: (string | string[]) }) => {
     return {
@@ -104,7 +108,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="message"
                     name="message"
-                    placeholder="Anecdote message"
+                    placeholder="What you are looking to communicate. In a cover letter, this would be the opening line of a paragraph."
                     rows={2}
                     value={state.message}
                     onChange={onChange}
@@ -115,8 +119,8 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="context"
                     name="context"
-                    placeholder="Project context"
-                    rows={2}
+                    placeholder="Set the scene for this example; when or where it was, what inspired the project, or why the example matters."
+                    rows={3}
                     value={state.context}
                     onChange={onChange}
                 />
@@ -126,8 +130,8 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="actions"
                     name="actions"
-                    placeholder="Project actions"
-                    rows={2}
+                    placeholder="Describe what you did, including key steps along the way. Keep in mind what you owned specifically (avoid using 'we' instead of 'I')."
+                    rows={3}
                     value={state.actions}
                     onChange={onChange}
                 />
@@ -137,8 +141,8 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="impact"
                     name="impact"
-                    placeholder="Project impact"
-                    rows={2}
+                    placeholder="The result of your actions. Include measurable results if you can, such as data or an award. Provide context to the results to communicate why it is impressive."
+                    rows={3}
                     value={state.impact}
                     onChange={onChange}
                 />
@@ -148,8 +152,8 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="learnings"
                     name="learnings"
-                    placeholder="Project learnings"
-                    rows={2}
+                    placeholder="(Optional) How this experience helped you grow. It can be a skill you acquired or something you would do differently. This would be the closing line for the paragraph."
+                    rows={3}
                     value={state.learnings}
                     onChange={onChange}
                 />
@@ -158,15 +162,22 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Label>Tags</Label>
                 <TagsInput tags={state.tags} syncTags={syncTags}/>
             </FullWidthDiv>
-            <FullWidthDiv>
-                <button onClick={handleSave} type="button">Save Changes</button>
+            <Div>
+                <Button onClick={handleSave}>Save Changes</Button>
                 {/*TODO: remove new projects from state if they are discarded*/}
-                <button onClick={() => setIsEditing(prevState => !prevState)}>Discard Changes</button>
-                <button onClick={() => updateProject && updateProject('remove', _id)} type="button">Delete Project
-                </button>
-            </FullWidthDiv>
+                <Button onClick={() => setIsEditing(prevState => !prevState)} filled={false}>Discard Changes</Button>
+                <Button onClick={() => updateProject && updateProject('remove', _id)} type="button" filled={false}>Delete
+                    Project
+                </Button>
+            </Div>
         </LayoutContainer>
     </form>
 }
+
+const Div = styled(FullWidthDiv)`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+`
 
 export default ProjectForm;

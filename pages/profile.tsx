@@ -125,8 +125,9 @@ const Container = styled.div`
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  margin: 2rem auto;
+  margin: 2rem 1rem;
   padding: 2rem;
+  border-radius: 0.5em;
 `
 
 const Input = styled.input`

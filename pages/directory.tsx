@@ -77,6 +77,11 @@ const Directory: FC<Props> = () => {
         (async () => {
             const response = await fetch('/api/projects')
             const projects = await response.json()
+
+            if (projects.error) {
+                signIn('cognito', {callbackUrl: '/directory'})
+            }
+
             setProjectsData(projects)
             setIsLoading(false)
         })()

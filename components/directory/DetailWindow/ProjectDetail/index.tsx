@@ -12,8 +12,13 @@ import {
 } from "../../../shared/styledComponents"
 import TagsDisplay from "./TagsDisplay"
 import styled from "styled-components"
+import Button from "../../../shared/Button"
 
 const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditing}) => {
+    const startDateObj = new Date(data.startDate)
+    const endDateObj = new Date(data.endDate)
+    const dateOptions = {year: 'numeric', month: 'long', day: 'numeric'} as const
+
     return <LayoutContainer>
         <FullWidthDiv>
             <TitleRow>
@@ -37,11 +42,11 @@ const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditi
         </HalfWidthDiv>
         <QuarterWidthDiv>
             <Label htmlFor="startDate">Start Date </Label>
-            <P>{data.startDate}</P>
+            <P>{startDateObj.toLocaleDateString('en-GB', dateOptions)}</P>
         </QuarterWidthDiv>
         <QuarterWidthDiv>
             <Label htmlFor="endDate">End Date </Label>
-            <P>{data.endDate}</P>
+            <P>{endDateObj.toLocaleDateString('en-GB', dateOptions)}</P>
         </QuarterWidthDiv>
         <FullWidthDiv>
             <Label htmlFor="message">Message </Label>
@@ -67,9 +72,9 @@ const ProjectDetail: FC<DetailWindowProps> = ({data, changeSelection, setIsEditi
             <Label>Tags</Label>
             {data.tags && <TagsDisplay tags={data.tags}/>}
         </FullWidthDiv>
-        <FullWidthDiv>
-            <button onClick={() => setIsEditing(prevState => !prevState)}>Edit</button>
-        </FullWidthDiv>
+        <Div>
+            <Button onClick={() => setIsEditing(prevState => !prevState)} filled={false}>Edit</Button>
+        </Div>
     </LayoutContainer>
 }
 
@@ -81,6 +86,11 @@ const TitleRow = styled.div`
 
 const CloseIcon = styled.div`
   flex-shrink: 0;
+`
+
+const Div = styled(FullWidthDiv)`
+  display: flex;
+  justify-content: flex-end;
 `
 
 export default ProjectDetail;
