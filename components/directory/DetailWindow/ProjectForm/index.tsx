@@ -119,7 +119,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
                 <Textarea
                     id="context"
                     name="context"
-                    placeholder="Set the scene for this example; when or where it was, what inspired the project, or why the example matters."
+                    placeholder="Set the scene for this example; when or where it was, what inspired the project, or why the example matters. This would be the opening line of a cover letter paragraph."
                     rows={3}
                     value={state.context}
                     onChange={onChange}
