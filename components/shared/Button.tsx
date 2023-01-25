@@ -24,7 +24,6 @@ const CustomButton = styled.button<Props>`
     color: white;
     border: 2px solid ${props => props.theme.colors.primary};
   ` : css`
-    font-weight: bold;
     background: ${props => props.theme.colors.background};
     color: ${props => props.theme.colors.primary};
     border: 2px solid ${props => props.theme.colors.primary};
@@ -40,6 +39,8 @@ const CustomButton = styled.button<Props>`
 
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
 `
 
 export default Button;

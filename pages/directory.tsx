@@ -47,6 +47,7 @@ const Directory: FC<Props> = () => {
             setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
             setRenderTrigger(prevState => !prevState)
+            console.log("Projects data after add: ", projectsData)
         } else if (action === 'remove' && typeof data === 'string') {
             const response = await fetch('/api/projects', {
                 method: 'DELETE',
@@ -62,6 +63,7 @@ const Directory: FC<Props> = () => {
                 delete newObj[data]
                 return newObj
             })
+            console.log("Projects data after remove: ", projectsData)
             setSelectedProject('')
         } else {
             console.warn('No changes made: Incompatible parameters passed to updateProjects')

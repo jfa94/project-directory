@@ -2,6 +2,8 @@ import {FC} from "react"
 import styled from "styled-components"
 import {useSession, signOut, signIn} from "next-auth/react"
 import Link from "next/link"
+import Image from "next/image"
+import Button from "../../components/shared/Button"
 
 interface Props {
 }
@@ -12,19 +14,19 @@ const Header: FC<Props> = () => {
     return <CustomHeader>
         <Link href="/" passHref>
             <Logo>
-                <p>Logo</p>
+                <Image src="/logo/uncovered_logo.svg" alt="UNCOVERED" width={200} height={35}/>
             </Logo>
         </Link>
         <Navigation>
-            <Link href="/">Home</Link>
-            <Link href="/directory">Directory</Link>
-            <Link href="/generator">Generator</Link>
+            <Link href="/">HOME</Link>
+            <Link href="/directory">DIRECTORY</Link>
+            <Link href="/generator">GENERATOR</Link>
             {session ?
                 <>
-                    <Link href="/profile">Profile</Link>
-                    <button onClick={() => signOut({callbackUrl: "/api/auth/logout"})}>Logout</button>
+                    <Link href="/profile">PROFILE</Link>
+                    <Button filled={false} onClick={() => signOut({callbackUrl: "/api/auth/logout"})}>LOGOUT</Button>
                 </> :
-                <button onClick={() => signIn('cognito')}>Login</button>
+                <Button onClick={() => signIn('cognito')}>LOGIN</Button>
             }
         </Navigation>
     </CustomHeader>
@@ -40,7 +42,7 @@ const CustomHeader = styled.header`
 
 const Logo = styled.div`
   cursor: pointer;
-  height: 4rem;
+  //height: 4rem;
   display: flex;
   align-items: center;
 `
@@ -48,9 +50,21 @@ const Logo = styled.div`
 const Navigation = styled.nav`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   a, button {
-    margin-left: 1rem;
+    margin: 0.5rem;
+
+    font-weight: bold;
+    font-size: 0.9rem;
+
+  }
+
+  a {
+    &:hover {
+      transform: translate(0, -0.1rem);
+      text-decoration: wavy underline;
+    }
   }
 `
 
