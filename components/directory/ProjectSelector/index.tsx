@@ -10,18 +10,6 @@ const mm = today.getMonth() + 1
 const dd = today.getDate()
 const todayString = `${today.getFullYear()}-${(mm > 9 ? '' : '0') + mm}-${(dd > 9 ? '' : '0') + dd}`
 
-const newProjectId = `project${Date.now()}`
-const newProject = {
-    [newProjectId]: {
-        'title': 'New Project',
-        'category': 'Project',
-        'startDate': todayString,
-        'endDate': todayString,
-        'context': '',
-        'tags': []
-    }
-}
-
 interface ProjectData {
     projectKey: string,
     startDate: Date,
@@ -81,6 +69,17 @@ const ProjectSelector: FC<Props> = ({renderTrigger, selection, changeSelection, 
     const [sortedData, setSortedData] = useState<DataByYear>({})
     const [years, setYears] = useState<string[]>([])
     const [filterTerms, setFilterTerms] = useState<string[]>([])
+
+    const newProjectId = `project${Date.now()}`
+    const newProject = {
+        [newProjectId]: {
+            'title': 'New Project',
+            'category': 'Project',
+            'startDate': todayString,
+            'endDate': todayString,
+            'tags': []
+        }
+    }
 
     useEffect(() => {
         const [tempData, tempYears] = sortProjects(projectsData)
