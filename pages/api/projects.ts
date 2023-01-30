@@ -5,11 +5,16 @@ import AWS from "aws-sdk"
 
 // TODO: create TS interfaces for ddb request params
 
+function parseJwt (token) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
+
 export default async function getProjects(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const session = await getSession({req})
 
     if (session && ['GET', 'PUT', 'DELETE'].includes(req.method ?? '')) {
         const login = `cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
+        const iam_sub = parseJwt(session.user.bearerToken).sub
 
         AWS.config.region = process.env.AWS_REGION
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -53,6 +58,7 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
                     params['Item'] = {
                         // @ts-ignore
                         'userid': AWS.config.credentials.data.IdentityId,
+                        'sub': iam_sub,
                         'projectid': req.body.projectid,
                         'title': req.body.title,
                         'category': req.body.category,
