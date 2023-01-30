@@ -30,8 +30,9 @@ const Directory: FC<Props> = () => {
         data: { [id: string]: ProjectProps } | string
     ) => Promise<void> = async (action, data) => {
         if (action === 'add') {
-            setProjectsData(prevState => Object.assign(data, prevState))
-            setSelectedProject(Object.keys(data)[0])
+            const copyData = Object.assign({}, data)
+            setProjectsData(prevState => Object.assign(copyData, prevState))
+            setSelectedProject(Object.keys(copyData)[0])
             setIsEditing(true)
         } else if (action === 'update' && typeof data === 'object') {
             const response = await fetch('/api/projects', {
@@ -47,7 +48,6 @@ const Directory: FC<Props> = () => {
             setProjectsData(prevState => Object.assign(prevState, data))
             setSelectedProject(Object.keys(data)[0])
             setRenderTrigger(prevState => !prevState)
-            console.log("Projects data after add: ", projectsData)
         } else if (action === 'remove' && typeof data === 'string') {
             const response = await fetch('/api/projects', {
                 method: 'DELETE',
@@ -63,8 +63,6 @@ const Directory: FC<Props> = () => {
                 delete newObj[data]
                 return newObj
             })
-            console.log("Projects data after remove: ", projectsData)
-            setSelectedProject('')
         } else {
             console.warn('No changes made: Incompatible parameters passed to updateProjects')
         }
