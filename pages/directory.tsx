@@ -26,7 +26,7 @@ const Directory: FC<Props> = () => {
     const [renderTrigger, setRenderTrigger] = useState(true)
 
     const updateProjects: (
-        action: 'add' | 'update' | 'remove',
+        action: 'add' | 'update' | 'remove' | 'discard',
         data: { [id: string]: ProjectProps } | string
     ) => Promise<void> = async (action, data) => {
         if (action === 'add') {
@@ -58,6 +58,12 @@ const Directory: FC<Props> = () => {
             })
             console.log(response)
 
+            setProjectsData(prevState => {
+                const newObj = Object.assign({}, prevState)
+                delete newObj[data]
+                return newObj
+            })
+        } else if (action === 'discard' && typeof data === 'string') {
             setProjectsData(prevState => {
                 const newObj = Object.assign({}, prevState)
                 delete newObj[data]

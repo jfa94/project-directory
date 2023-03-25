@@ -73,6 +73,7 @@ const ProjectSelector: FC<Props> = ({renderTrigger, selection, changeSelection, 
     const newProjectId = `project${Date.now()}`
     const newProject = {
         [newProjectId]: {
+            'new': true,
             'title': 'New Project',
             'category': 'Project',
             'startDate': todayString,

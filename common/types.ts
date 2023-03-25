@@ -1,6 +1,7 @@
 import {Dispatch, SetStateAction} from "react"
 
 export interface ProjectProps {
+    new: boolean,
     title: string,
     category: 'Project' | 'Anecdote',
     message: string,
@@ -18,5 +19,5 @@ export interface DetailWindowProps {
     data: ProjectProps,
     setIsEditing: Dispatch<SetStateAction<boolean>>,
     changeSelection?: (newSelection: string) => void,
-    updateProject?: (action: 'add' | 'update' | 'remove', data: {} | string) => void
+    updateProject?: (action: 'add' | 'update' | 'remove' | 'discard', data: {} | string) => void
 }

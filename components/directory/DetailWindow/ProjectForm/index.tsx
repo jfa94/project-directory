@@ -15,7 +15,7 @@ import Button from "../../../shared/Button"
 import HelpTooltip from "../../../shared/HelpTooltip"
 import styled from "styled-components"
 
-const reducer = (state: ProjectProps, {field, value}: { field: string, value: (string | string[]) }) => {
+const reducer = (state: ProjectProps, {field, value}: { field: string, value: (boolean | string | string[]) }) => {
     return {
         ...state,
         [field]: value
@@ -44,8 +44,16 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
         dispatch({field: 'tags', value: newTags})
     }
 
+    const handleDiscard = () => {
+        if (state.new === true) {
+            updateProject && updateProject('discard', _id)
+        }
+        setIsEditing(prevState => !prevState)
+    }
+
     const handleSave = () => {
         if (updateProject) {
+            dispatch({field: 'new', value: false})
             updateProject('update', {[_id]: state})
         }
         setIsEditing(prevState => !prevState)
@@ -164,8 +172,7 @@ const ProjectForm: FC<DetailWindowProps> = ({_id, data, setIsEditing, updateProj
             </FullWidthDiv>
             <Div>
                 <Button onClick={handleSave}>Save Changes</Button>
-                {/*TODO: remove new projects from state if they are discarded*/}
-                <Button onClick={() => setIsEditing(prevState => !prevState)} filled={false}>Discard Changes</Button>
+                <Button onClick={handleDiscard} filled={false}>Discard Changes</Button>
                 <Button onClick={() => updateProject && updateProject('remove', _id)} type="button" filled={false}>Delete
                     Project
                 </Button>
