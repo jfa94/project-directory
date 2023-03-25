@@ -18,6 +18,8 @@ const Profile: FC<Props> = () => {
     const [nameValue, setNameValue] = useState<string>(session?.user?.name ?? '')
     const [emailValue, setEmailValue] = useState<string>(session?.user?.email ?? '')
     const [pendingVerification, setPendingVerification] = useState<Boolean>(false)
+    const [currentPasswordValue, setCurrentPasswordValue] = useState<string>('')
+    const [proposedPasswordValue, setProposedPasswordValue] = useState<string>('')
 
     const updateValue = useCallback(async (attributeName: 'email' | 'name', value: string) => {
             const response = await fetch('/api/auth/update', {
@@ -40,6 +42,24 @@ const Profile: FC<Props> = () => {
             }
         }, []
     )
+
+    const changePassword = useCallback(async (currentPassword: string, proposedPassword: string) => {
+        const response = await fetch('/api/auth/changePassword', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({currentPassword: currentPassword, proposedPassword: proposedPassword})
+        })
+
+        if (response.status === 200) {
+            alert('Password updated!')
+            setIsEditing(false)
+        } else {
+            alert('Error updating value.')
+            setIsEditing(false)
+        }
+    }, [])
 
     const verifyEmail = useCallback(async (verificationCode: string) => {
         const response = await fetch('/api/auth/verify', {
@@ -97,7 +117,29 @@ const Profile: FC<Props> = () => {
                                 Cancel
                             </Button>
                         </div>
+
+                        <div>
+                            <Label htmlFor='password'><b>Current Password</b></Label>
+                            <Input id='password'
+                                   type='password'
+                                   value={currentPasswordValue}
+                                   onChange={(e) => setCurrentPasswordValue(e.target.value)}
+                            />
+                            <Label htmlFor='proposedPassword'>New Password</Label>
+                            <Input id='proposedPassword'
+                                   type='password'
+                                   value={proposedPasswordValue}
+                                   onChange={(e) => setProposedPasswordValue(e.target.value)}
+                            />
+                            <Button onClick={() => changePassword(currentPasswordValue, proposedPasswordValue)}>
+                                Update
+                            </Button>
+                            <Button onClick={() => setIsEditing(false)}>
+                                Cancel
+                            </Button>
+                        </div>
                     </> :
+
                     <>
                         <div>
                             <P><b>Name</b></P>
@@ -107,6 +149,11 @@ const Profile: FC<Props> = () => {
                         <div>
                             <P><b>Email</b></P>
                             <P>{emailValue}</P>
+                            <Button onClick={() => setIsEditing(true)}>Edit</Button>
+                        </div>
+                        <div>
+                            <P><b>Password</b></P>
+                            <P>******</P>
                             <Button onClick={() => setIsEditing(true)}>Edit</Button>
                         </div>
                     </>}

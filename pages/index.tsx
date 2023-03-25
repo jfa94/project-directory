@@ -1,18 +1,20 @@
-import {FC} from "react"
-import Link from "next/link"
+import {FC, MouseEvent} from "react"
 import Image from "next/image"
+import {useRouter} from "next/router"
 import styled from "styled-components"
 import Button from "../components/shared/Button"
-import Card from "../components/shared/Card";
+import Card from "../components/shared/Card"
 
 interface Props {
 }
 
-const handleClick = () => {
-    alert('Click')
-}
-
 const Home: FC<Props> = () => {
+    const router = useRouter()
+    const handleClick = (e: MouseEvent) => {
+        e.preventDefault()
+        router.push("/directory")
+    }
+
     return <Container>
         <Welcome>
             <WelcomeText>
@@ -30,7 +32,9 @@ const Home: FC<Props> = () => {
                 </P>
 
                 <ButtonContainer>
-                    <Button onClick={handleClick} size="large">Get Started</Button>
+                    <Button onClick={handleClick} size="large">
+                        Get Started
+                    </Button>
                     {/*<Button filled={false} onClick={handleClick}>Learn More</Button>*/}
                 </ButtonContainer>
             </WelcomeText>
@@ -60,23 +64,37 @@ const Home: FC<Props> = () => {
                 </FeatureCard>
 
                 <FeatureCard primary={false}>
-                    <h2>Find</h2>
+                    <h2>Always find the perfect example</h2>
+                    <p>
+                        Don&rsquo;t let tough interview questions catch you off guard. Use the search feature to
+                        easily find the perfect example from your saved stories to answer any
+                        question with confidence.
+                    </p>
                     <p>
                         Adding tags makes it easy to find the perfect interview example, or put together a bulletproof
-                        case for promotion.
+                        case for promotion. Stand out in your interviews and impress hiring managers with your
+                        preparedness and expertise.
                     </p>
                 </FeatureCard>
 
                 <FeatureCard primary={false}>
                     <h2>A custom cover letter for every application</h2>
-                    <p>Feature description</p>
+                    <p>
+                        Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
+                        hiring managers with a personalized, unique cover letter that showcases your skills and
+                        experiences.
+                    </p>
+                    <p>
+                        The Cover Letter Generator uses your saved success stories to create a tailored cover letter
+                        that speaks directly to the hiring manager&rsquo;s needs.
+                    </p>
                 </FeatureCard>
 
-                <FeatureCard primary={false}>
-                    <h2>Get reminders to stay consistent</h2>
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <p>Still working on a project? Set reminders so you don't forget to log your latest work.</p>
-                </FeatureCard>
+                {/*<FeatureCard primary={false}>*/}
+                {/*    <h2>Get reminders to stay consistent</h2>*/}
+                {/*    /!* eslint-disable-next-line react/no-unescaped-entities *!/*/}
+                {/*    <p>Still working on a project? Set reminders so you don't forget to log your latest work.</p>*/}
+                {/*</FeatureCard>*/}
 
             </CardCarousel>
         </Information>
@@ -92,7 +110,7 @@ const Section = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 650px) {
+  @media (max-width: 850px) {
     flex-direction: column;
     gap: 2rem;
   }
@@ -113,6 +131,7 @@ const WelcomeText = styled.div`
 const H2 = styled.h2`
   font-size: 2.5rem;
   line-height: 2.8rem;
+  min-height: 5.6rem;
   margin: 0;
 `
 
@@ -141,13 +160,13 @@ const Information = styled(Section)`
 
 const CardCarousel = styled.div`
   width: 100%;
-  padding: 0 4rem;
+  padding: 0 6rem;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 
-  @media (max-width: 1250px) {
+  @media (max-width: 1350px) {
     padding: 0 1.5rem;
   }
 
