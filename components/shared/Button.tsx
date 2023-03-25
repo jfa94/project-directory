@@ -1,8 +1,8 @@
-import {FC} from "react"
+import {FC, MouseEvent} from "react"
 import styled, {css} from "styled-components"
 
 interface Props {
-    onClick: () => void,
+    onClick: (e: MouseEvent) => void,
     filled?: boolean,
     size?: "medium" | "large"
     type?: "button" | "submit" | "reset"
