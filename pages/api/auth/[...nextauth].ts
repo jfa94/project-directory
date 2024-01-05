@@ -12,6 +12,7 @@ export default NextAuth({
             authorization: {params: {scope: "openid aws.cognito.signin.user.admin"}},
         })
     ],
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async session({session, token}) {
             return new Promise((Resolve, Reject) => {
