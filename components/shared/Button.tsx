@@ -2,6 +2,7 @@ import {FC, MouseEvent} from "react"
 import styled, {css} from "styled-components"
 
 interface Props {
+    children: object | string,
     onClick: (e: MouseEvent) => void,
     filled?: boolean,
     size?: "medium" | "large"
