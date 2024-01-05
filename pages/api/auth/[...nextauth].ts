@@ -7,7 +7,7 @@ export default NextAuth({
         CognitoProvider({
             clientId: process.env.COGNITO_CLIENT_ID ?? '',
             clientSecret: process.env.COGNITO_CLIENT_SECRET ?? '',
-            issuer: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`,
+            issuer: `https://cognito-idp.${process.env.CLOUD_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`,
             idToken: true,
             authorization: {params: {scope: "openid aws.cognito.signin.user.admin"}},
         })
@@ -41,7 +41,7 @@ export default NextAuth({
 
 async function refreshAccessToken(token) {
     try {
-        const url = `https://${process.env.COGNITO_USER_POOL}.auth.${process.env.AWS_REGION}.amazoncognito.com/oauth2/token?` +
+        const url = `https://${process.env.COGNITO_USER_POOL}.auth.${process.env.CLOUD_REGION}.amazoncognito.com/oauth2/token?` +
             new URLSearchParams({
                 grant_type: "refresh_token",
                 client_id: process.env.COGNITO_CLIENT_ID,

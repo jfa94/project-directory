@@ -13,10 +13,10 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
     const session = await getSession({req})
 
     if (session && ['GET', 'PUT', 'DELETE'].includes(req.method ?? '')) {
-        const login = `cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
+        const login = `cognito-idp.${process.env.CLOUD_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
         const iam_sub = parseJwt(session.user.bearerToken).sub
 
-        AWS.config.region = process.env.AWS_REGION
+        AWS.config.region = process.env.CLOUD_REGION
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: process.env.COGNITO_IDENTITY_POOL_ID ?? '',
             Logins: {
@@ -29,7 +29,7 @@ export default async function getProjects(req: NextApiRequest, res: NextApiRespo
             // @ts-ignore
             await AWS.config.credentials.getPromise()
 
-            const ddb = await new AWS.DynamoDB.DocumentClient({region: process.env.AWS_REGION})
+            const ddb = await new AWS.DynamoDB.DocumentClient({region: process.env.CLOUD_REGION})
             const params = {TableName: process.env.DYNAMODB_TABLE ?? ''}
 
             switch (req.method) {
