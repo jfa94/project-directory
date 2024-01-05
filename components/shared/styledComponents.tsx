@@ -66,7 +66,7 @@ export const Textarea = styled.textarea`
   font-size: ${props => props.theme.fontSizes.medium};
 `
 
-export const TagsField = styled.div<{ editing: boolean }>`
+export const TagsField = styled.div<{ editing?: boolean }>`
   display: flex;
   flex-wrap: wrap;
   min-height: 2.3rem;
@@ -76,7 +76,7 @@ export const TagsField = styled.div<{ editing: boolean }>`
   border: ${props => props.editing ? 'solid 1px grey' : 'none'}
 `
 
-export const TagContainer = styled.div<{ primary: boolean }>`
+export const TagContainer = styled.div<{ primary?: boolean }>`
   display: flex;
   align-items: center;
   padding: 0.2rem;

@@ -1,8 +1,8 @@
-import {FC, MouseEvent} from "react"
+import {FC, MouseEvent, ReactNode} from "react"
 import styled, {css} from "styled-components"
 
 interface Props {
-    children: object | string,
+    children: ReactNode,
     onClick: (e: MouseEvent) => void,
     filled?: boolean,
     size?: "medium" | "large"
