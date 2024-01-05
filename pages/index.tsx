@@ -44,6 +44,7 @@ const Home: FC<Props> = () => {
                        alt="Welcome"
                        height={550}
                        width={550}
+                       priority={true}
                 />
             </WelcomeImage>
         </Welcome>
@@ -57,7 +58,7 @@ const Home: FC<Props> = () => {
                         it had, and more, so you never forget an important detail.
                     </p>
                     <p>
-                        The Project Directory template prompts you to think of important factors ahead of time, such as:
+                        The Project Directory template prompts you to think of important factors ahead of time.
                         What are you trying to communicate with each example? What was the impact of your work? Did you
                         learn anything new?
                     </p>
@@ -78,7 +79,7 @@ const Home: FC<Props> = () => {
                 </FeatureCard>
 
                 <FeatureCard primary={false}>
-                    <h2>A custom cover letter for every application</h2>
+                    <h2>A custom letter for every application</h2>
                     <p>
                         Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
                         hiring managers with a personalized, unique cover letter that showcases your skills and
@@ -105,84 +106,85 @@ const Container = styled.div`
 `
 
 const Section = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-  @media (max-width: 850px) {
-    flex-direction: column;
-    gap: 2rem;
-  }
+    @media (max-width: 850px) {
+        flex-direction: column;
+        gap: 2rem;
+    }
 `
 
 const Welcome = styled(Section)`
-  background: linear-gradient(to bottom,
-  white 0%,
-  white 90%,
-  whitesmoke 100%)
+    background: linear-gradient(to bottom,
+    white 0%,
+    white 90%,
+    whitesmoke 100%)
 `
 
 const WelcomeText = styled.div`
-  padding: 1.5rem;
-  max-width: 600px;
+    padding: 1.5rem;
+    max-width: 600px;
 `
 
 const H2 = styled.h2`
-  font-size: 2.5rem;
-  line-height: 2.8rem;
-  min-height: 5.6rem;
-  margin: 0;
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+    min-height: 5.6rem;
+    margin: 0;
 `
 
 const P = styled.p`
-  font-size: 1.5rem;
-  margin: 0.5rem 0 2rem 0;
+    font-size: 1.5rem;
+    margin: 0.5rem 0 2rem 0;
 `
 
 const WelcomeImage = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 0 2rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 2rem;
 `
 
 const ButtonContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 2.5rem;
-  font-size: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
 `
 
 const Information = styled(Section)`
-  background-color: whitesmoke;
-  padding: 4rem 0;
+    background-color: whitesmoke;
+    padding: 4rem 0;
 `
 
 const CardCarousel = styled.div`
-  width: 100%;
-  padding: 0 6rem;
+    width: 100%;
+    max-width: 120rem;
+    padding: 0 6rem;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-
-  @media (max-width: 1350px) {
-    padding: 0 1.5rem;
-  }
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 650px) {
-    grid-template-columns: 1fr;
-    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
-  }
+
+    @media (max-width: 1350px) {
+        padding: 0 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 650px) {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+        gap: 1rem;
+    }
 `
 
 const FeatureCard = styled(Card)`
-  width: 100%;
+    width: 100%;
 `
 
 export default Home;

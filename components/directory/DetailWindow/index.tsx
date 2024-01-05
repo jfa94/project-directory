@@ -9,7 +9,7 @@ import {ProjectProps} from "../../../common/types"
 interface Props {
     _id: string,
     data: ProjectProps,
-    updateProjects: (action: 'add' | 'update' | 'remove', data: {} | string) => void,
+    updateProjects: (action: 'add' | 'update' | 'remove' | 'discard', data: {} | string) => void,
     changeSelection: (newSelection: string) => void,
     editingState: [boolean, Dispatch<SetStateAction<boolean>>]
 }

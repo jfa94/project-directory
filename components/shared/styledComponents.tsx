@@ -97,7 +97,7 @@ export const TagText = styled.span`
 `
 
 export const DeleteIcon = styled(Image)`
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(13deg) brightness(107%) contrast(103%);
+  //filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(13deg) brightness(107%) contrast(103%);
   cursor: pointer;
 `
 
