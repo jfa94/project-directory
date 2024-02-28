@@ -42,63 +42,77 @@ const Home: FC<Props> = () => {
             <WelcomeImage>
                 <Image src="/images/welcome.svg"
                        alt="Welcome"
-                       height={550}
-                       width={550}
+                    // height={550}
+                    // width={550}
                        priority={true}
+                       fill={true}
                 />
             </WelcomeImage>
         </Welcome>
 
-        <Information>
-            <CardCarousel>
-                <FeatureCard primary={false}>
-                    <h2>Remember all the important details</h2>
-                    <p>
-                        Working on an amazing project? Keep track of your work, the context surrounding it, the impact
-                        it had, and more, so you never forget an important detail.
-                    </p>
-                    <p>
-                        The Project Directory template prompts you to think of important factors ahead of time.
-                        What are you trying to communicate with each example? What was the impact of your work? Did you
-                        learn anything new?
-                    </p>
-                </FeatureCard>
+        <FeatureIconSection>
+            <IconCarousel primary={false}>
+                <IconContainer>
+                    <h2>Keep track of your achievements</h2>
+                </IconContainer>
+                <IconContainer>
+                    <h2>Effortlessly prepare for interviews</h2>
+                </IconContainer>
+                <IconContainer>
+                    <h2>Leverage AI to write custom cover letters</h2>
+                </IconContainer>
+            </IconCarousel>
+        </FeatureIconSection>
 
-                <FeatureCard primary={false}>
-                    <h2>Always find the perfect example</h2>
-                    <p>
-                        Don&rsquo;t let tough interview questions catch you off guard. Use the search feature to
-                        easily find the perfect example from your saved stories to answer any
-                        question with confidence.
-                    </p>
-                    <p>
-                        Adding tags makes it easy to find the perfect interview example, or put together a bulletproof
-                        case for promotion. Stand out in your interviews and impress hiring managers with your
-                        preparedness and expertise.
-                    </p>
-                </FeatureCard>
+        <InformationSection>
 
-                <FeatureCard primary={false}>
-                    <h2>A custom letter for every application</h2>
-                    <p>
-                        Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
-                        hiring managers with a personalized, unique cover letter that showcases your skills and
-                        experiences.
-                    </p>
-                    <p>
-                        The Cover Letter Generator uses your saved success stories to create a tailored cover letter
-                        that speaks directly to the hiring manager&rsquo;s needs.
-                    </p>
-                </FeatureCard>
+            <FeatureCard primary={false}>
+                <h2>Remember all the important details</h2>
+                <p>
+                    Working on an amazing project? Keep track of your work, the context surrounding it, the impact
+                    it had, and more, so you never forget an important detail.
+                </p>
+                <p>
+                    The Project Directory template prompts you to think of important factors ahead of time.
+                    What are you trying to communicate with each example? What was the impact of your work? Did you
+                    learn anything new?
+                </p>
+            </FeatureCard>
 
-                {/*<FeatureCard primary={false}>*/}
-                {/*    <h2>Get reminders to stay consistent</h2>*/}
-                {/*    /!* eslint-disable-next-line react/no-unescaped-entities *!/*/}
-                {/*    <p>Still working on a project? Set reminders so you don't forget to log your latest work.</p>*/}
-                {/*</FeatureCard>*/}
+            <FeatureCard primary={false}>
+                <h2>Always find the perfect example</h2>
+                <p>
+                    Don&rsquo;t let tough interview questions catch you off guard. Use the search feature to
+                    easily find the perfect example from your saved stories to answer any
+                    question with confidence.
+                </p>
+                <p>
+                    Adding tags makes it easy to find the perfect interview example, or put together a bulletproof
+                    case for promotion. Stand out in your interviews and impress hiring managers with your
+                    preparedness and expertise.
+                </p>
+            </FeatureCard>
 
-            </CardCarousel>
-        </Information>
+            <FeatureCard primary={false}>
+                <h2>A custom letter for every application</h2>
+                <p>
+                    Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
+                    hiring managers with a personalized, unique cover letter that showcases your skills and
+                    experiences.
+                </p>
+                <p>
+                    The Cover Letter Generator uses your saved success stories to create a tailored cover letter
+                    that speaks directly to the hiring manager&rsquo;s needs.
+                </p>
+            </FeatureCard>
+
+            {/*<FeatureCard primary={false}>*/}
+            {/*    <h2>Get reminders to stay consistent</h2>*/}
+            {/*    /!* eslint-disable-next-line react/no-unescaped-entities *!/*/}
+            {/*    <p>Still working on a project? Set reminders so you don't forget to log your latest work.</p>*/}
+            {/*</FeatureCard>*/}
+
+        </InformationSection>
     </Container>
 }
 
@@ -142,9 +156,17 @@ const P = styled.p`
 `
 
 const WelcomeImage = styled.div`
+    height: 550px;
+    width: 550px;
+    position: relative;
     display: flex;
     justify-content: center;
     margin: 0 2rem;
+
+    @media (max-width: 650px) {
+        height: 350px;
+        width: 350px;
+    }
 `
 
 const ButtonContainer = styled.div`
@@ -154,33 +176,48 @@ const ButtonContainer = styled.div`
     font-size: 1.5rem;
 `
 
-const Information = styled(Section)`
-    background-color: whitesmoke;
+const FeatureIconSection = styled(Section)`
+    background: linear-gradient(0deg, white 50%, whitesmoke 50%);
     padding: 4rem 0;
+    
+    @media (max-width: 850px){
+        padding: 3rem 1rem;
+    }
 `
 
-const CardCarousel = styled.div`
+const IconCarousel = styled(Card)`
     width: 100%;
-    max-width: 120rem;
-    padding: 0 6rem;
+    max-width: 70rem;
+    padding: 2rem 0;
+    margin: 0 2rem;
+    
+    flex-direction: row;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    & div:not(:first-child) {
+        border-left: 1px solid grey;
+    }
+    
+`
 
-    @media (max-width: 1350px) {
-        padding: 0 1.5rem;
+const IconContainer = styled.div`
+    //width: 100%;
+    //height: 80%;
+    padding: 1rem 2rem;
+    background: white;
+
+    @media (max-width: 850px){
+        font-size: 0.8rem;
+        padding: 0.7rem 1.4rem;
     }
 
-    @media (max-width: 1100px) {
-        grid-template-columns: 1fr 1fr;
+    @media (max-width: 500px){
+        font-size: 0.5rem;
     }
+`
 
-    @media (max-width: 650px) {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-        gap: 1rem;
-    }
+const InformationSection = styled(Section)`
+    //background-color: white;
+    padding: 4rem 0;
 `
 
 const FeatureCard = styled(Card)`
