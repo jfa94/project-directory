@@ -41,11 +41,11 @@ const Home: FC<Props> = () => {
 
             <WelcomeImage>
                 <Image src="/images/welcome.svg"
-                       alt="Welcome"
+                    alt="Welcome"
                     // height={550}
                     // width={550}
-                       priority={true}
-                       fill={true}
+                    priority={true}
+                    fill={true}
                 />
             </WelcomeImage>
         </Welcome>
@@ -179,24 +179,25 @@ const ButtonContainer = styled.div`
 const FeatureIconSection = styled(Section)`
     background: linear-gradient(0deg, white 50%, whitesmoke 50%);
     padding: 4rem 0;
-    
+
     @media (max-width: 850px){
         padding: 3rem 1rem;
     }
 `
 
 const IconCarousel = styled(Card)`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
     width: 100%;
     max-width: 70rem;
     padding: 2rem 0;
     margin: 0 2rem;
-    
-    flex-direction: row;
 
     & div:not(:first-child) {
         border-left: 1px solid grey;
     }
-    
+
 `
 
 const IconContainer = styled.div`
