@@ -10,6 +10,7 @@ export default NextAuth({
             issuer: `https://cognito-idp.${process.env.CLOUD_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`,
             idToken: true,
             authorization: {params: {scope: "openid aws.cognito.signin.user.admin"}},
+            checks: ['none'],
         })
     ],
     secret: process.env.NEXTAUTH_SECRET,
