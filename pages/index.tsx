@@ -132,21 +132,28 @@ const Section = styled.div`
 `
 
 const Welcome = styled(Section)`
+    justify-content: space-between;
+    padding: 0 5rem;
     background: linear-gradient(to bottom,
     white 0%,
-    white 90%,
-    whitesmoke 100%)
+    white 50%,
+    whitesmoke 100%);
+    
+    @media (max-width: 1250px) {
+        padding: 0 2rem;
+    }
 `
 
 const WelcomeText = styled.div`
     padding: 1.5rem;
-    max-width: 600px;
+    max-width: 750px;
+    min-width: 0;
 `
 
 const H2 = styled.h2`
     font-size: 2.5rem;
     line-height: 2.8rem;
-    min-height: 5.6rem;
+    //min-height: 5.6rem;
     margin: 0;
 `
 
@@ -156,12 +163,13 @@ const P = styled.p`
 `
 
 const WelcomeImage = styled.div`
-    height: 550px;
-    width: 550px;
+    height: 500px;
+    width: 500px;
+    min-width: 400px;
     position: relative;
     display: flex;
     justify-content: center;
-    margin: 0 2rem;
+    margin: 0 1.5rem;
 
     @media (max-width: 650px) {
         height: 350px;
@@ -205,9 +213,10 @@ const IconContainer = styled.div`
     //height: 80%;
     padding: 1rem 2rem;
     background: white;
+    font-size: 0.9rem;
 
     @media (max-width: 850px){
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         padding: 0.7rem 1.4rem;
     }
 
