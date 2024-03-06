@@ -163,8 +163,8 @@ const Profile: FC<Props> = () => {
 }
 
 const Background = styled.div`
-  background-color: whitesmoke;
-  border-top: 1px solid whitesmoke;
+  background-color: ${props => props.theme.backgroundAlt};
+  border-top: 1px solid ${props => props.theme.backgroundAlt};
   min-height: calc(100vh - 6rem);
 `
 

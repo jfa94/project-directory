@@ -5,15 +5,17 @@ export const theme = {
         secondaryAlt: "#F4F7F0",
         third: "#434878",
         background: "white",
+        backgroundAlt: "whitesmoke",
+        backgroundNegative: "#282A38",
         gradient: "linear-gradient(45deg, #E66465, #9198E5)",
         text: "#0D1F22",
     },
     fontSizes: {
-        xsmall: "0.5rem",
+        xsmall: "0.6rem",
         small: "0.8rem",
-        medium: "1.1rem",
-        large: "1.6rem",
-        xlarge: "2rem",
-        xxlarge: "3rem",
+        medium: "1rem",
+        large: "1.1rem",
+        xlarge: "1.5rem",
+        xxlarge: "2.1rem",
     }
 }

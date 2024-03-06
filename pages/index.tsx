@@ -4,6 +4,7 @@ import {useRouter} from "next/router"
 import styled from "styled-components"
 import Button from "../components/shared/Button"
 import Card from "../components/shared/Card"
+import Highlight from "../components/shared/Highlight"
 
 interface Props {
 }
@@ -41,11 +42,11 @@ const Home: FC<Props> = () => {
 
             <WelcomeImage>
                 <Image src="/images/welcome.svg"
-                    alt="Welcome"
+                       alt="Welcome"
                     // height={550}
                     // width={550}
-                    priority={true}
-                    fill={true}
+                       priority={true}
+                       fill={true}
                 />
             </WelcomeImage>
         </Welcome>
@@ -66,53 +67,73 @@ const Home: FC<Props> = () => {
 
         <InformationSection>
 
-            <FeatureCard primary={false}>
-                <h2>Remember all the important details</h2>
-                <p>
-                    Working on an amazing project? Keep track of your work, the context surrounding it, the impact
-                    it had, and more, so you never forget an important detail.
-                </p>
-                <p>
-                    The Project Directory template prompts you to think of important factors ahead of time.
-                    What are you trying to communicate with each example? What was the impact of your work? Did you
-                    learn anything new?
-                </p>
+            <FeatureCard>
+                <FeatureHeader>Remember all the <Highlight>important details</Highlight></FeatureHeader>
+                <div>
+                    <p>
+                        Working on an amazing project? Keep track of your work, the context surrounding it, the impact
+                        it had, and more, so you never forget an important detail.
+                    </p>
+                    <p>
+                        The Project Directory template prompts you to think of important factors ahead of time.
+                        What are you trying to communicate with each example? What was the impact of your work? Did you
+                        learn anything new?
+                    </p>
+                </div>
             </FeatureCard>
 
-            <FeatureCard primary={false}>
-                <h2>Always find the perfect example</h2>
-                <p>
-                    Don&rsquo;t let tough interview questions catch you off guard. Use the search feature to
-                    easily find the perfect example from your saved stories to answer any
-                    question with confidence.
-                </p>
-                <p>
-                    Adding tags makes it easy to find the perfect interview example, or put together a bulletproof
-                    case for promotion. Stand out in your interviews and impress hiring managers with your
-                    preparedness and expertise.
-                </p>
+            <FeatureCard>
+                <FeatureHeader>Always find the <Highlight>perfect example</Highlight></FeatureHeader>
+                <div>
+                    <p>
+                        Don&rsquo;t let tough interview questions catch you off guard. Use the search feature to
+                        easily find the perfect example from your saved stories to answer any
+                        question with confidence.
+                    </p>
+                    <p>
+                        Adding tags makes it easy to find the perfect interview example, or put together a bulletproof
+                        case for promotion. Stand out in your interviews and impress hiring managers with your
+                        preparedness and expertise.
+                    </p>
+                </div>
             </FeatureCard>
 
-            <FeatureCard primary={false}>
-                <h2>A custom letter for every application</h2>
-                <p>
-                    Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
-                    hiring managers with a personalized, unique cover letter that showcases your skills and
-                    experiences.
-                </p>
-                <p>
-                    The Cover Letter Generator uses your saved success stories to create a tailored cover letter
-                    that speaks directly to the hiring manager&rsquo;s needs.
-                </p>
+            <FeatureCard>
+                <FeatureHeader>A <Highlight>custom letter</Highlight> for every application</FeatureHeader>
+                <div>
+                    <p>
+                        Leverage the power of storytelling to stand out in a crowded job market. Impress recruiters and
+                        hiring managers with a personalized, unique cover letter that showcases your skills and
+                        experiences.
+                    </p>
+                    <p>
+                        The Cover Letter Generator uses your saved success stories to create a tailored cover letter
+                        that speaks directly to the hiring manager&rsquo;s needs.
+                    </p>
+                </div>
             </FeatureCard>
 
-            {/*<FeatureCard primary={false}>*/}
-            {/*    <h2>Get reminders to stay consistent</h2>*/}
+            {/*<FeatureCard>*/}
+            {/*    <FeatureHeader>Get reminders to stay consistent</FeatureHeader>*/}
             {/*    /!* eslint-disable-next-line react/no-unescaped-entities *!/*/}
             {/*    <p>Still working on a project? Set reminders so you don't forget to log your latest work.</p>*/}
             {/*</FeatureCard>*/}
 
         </InformationSection>
+
+        <HowSection>
+            <H2>How does it work?</H2>
+            <p>
+                The Cover Letter Generator uses a fine-tuned large language model based on Google&rsquo;s
+                <a href="https://huggingface.co/docs/transformers/model_doc/flan-t5">FLAN-T5</a>. The model runs on a
+                private AWS server, so your data is protected from third parties. We will never sell any of your
+                personal information.
+            </p>
+        </HowSection>
+
+        <FooterSection>
+            <h3>UNCOVERED</h3>
+        </FooterSection>
     </Container>
 }
 
@@ -132,15 +153,24 @@ const Section = styled.div`
 `
 
 const Welcome = styled(Section)`
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 0 5rem;
     background: linear-gradient(to bottom,
     white 0%,
     white 50%,
     whitesmoke 100%);
-    
+
+    @media (min-width: 1950px) {
+        justify-content: center;
+        gap: 15rem;
+    }
+
     @media (max-width: 1250px) {
         padding: 0 2rem;
+    }
+
+    @media (max-width: 750px) {
+        padding: 0;
     }
 `
 
@@ -151,14 +181,14 @@ const WelcomeText = styled.div`
 `
 
 const H2 = styled.h2`
-    font-size: 2.5rem;
+    font-size: ${props => props.theme.fontSizes.xxlarge};
     line-height: 2.8rem;
     //min-height: 5.6rem;
     margin: 0;
 `
 
 const P = styled.p`
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.fontSizes.xlarge};
     margin: 0.5rem 0 2rem 0;
 `
 
@@ -181,14 +211,14 @@ const ButtonContainer = styled.div`
     display: flex;
     gap: 1rem;
     margin-top: 2.5rem;
-    font-size: 1.5rem;
+    font-size: ${props => props.theme.fontSizes.large};
 `
 
 const FeatureIconSection = styled(Section)`
     background: linear-gradient(0deg, white 50%, whitesmoke 50%);
     padding: 4rem 0;
 
-    @media (max-width: 850px){
+    @media (max-width: 850px) {
         padding: 3rem 1rem;
     }
 `
@@ -213,25 +243,56 @@ const IconContainer = styled.div`
     //height: 80%;
     padding: 1rem 2rem;
     background: white;
-    font-size: 0.9rem;
+    font-size: ${props => props.theme.fontSizes.medium};
 
-    @media (max-width: 850px){
-        font-size: 0.75rem;
+    @media (max-width: 850px) {
+        font-size: ${props => props.theme.fontSizes.small};
         padding: 0.7rem 1.4rem;
     }
 
-    @media (max-width: 500px){
-        font-size: 0.5rem;
+    @media (max-width: 500px) {
+        font-size: ${props => props.theme.fontSizes.xsmall};
     }
 `
 
 const InformationSection = styled(Section)`
-    //background-color: white;
-    padding: 4rem 0;
+    flex-direction: column;
+    margin: auto;
+    max-width: 1250px;
+    padding: 0;
 `
 
-const FeatureCard = styled(Card)`
-    width: 100%;
+const FeatureCard = styled.div`
+    max-width: 100%;
+    margin: 0 4rem 2rem;
+
+    & > div {
+        font-size: ${props => props.theme.fontSizes.large};
+        line-height: 1.7rem;
+    }
+
+    @media (max-width: 650px) {
+        margin: 0 1rem;
+    }
+
+    @media (min-width: 1000px) {
+        display: grid;
+        grid-template-columns: 2fr 5fr;
+        gap: 2rem;
+
+    }
+`
+
+const FeatureHeader = styled.h2`
+`
+
+const HowSection = styled(Section)`
+    background: ${props => props.theme.colors.backgroundAlt};
+`
+
+const FooterSection = styled(Section)`
+    color: white;
+    background: ${props => props.theme.colors.backgroundNegative};
 `
 
 export default Home;
