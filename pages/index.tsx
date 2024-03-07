@@ -133,7 +133,8 @@ const Home: FC<Props> = () => {
                     <p>
                         The Cover Letter Generator uses AI to write a cover letter based on the examples saved in your
                         Project Directory. It uses a fine-tuned large language model based on Google&rsquo;s <a
-                        href="https://huggingface.co/docs/transformers/model_doc/flan-t5">FLAN-T5</a>. The model runs
+                        href="https://huggingface.co/docs/transformers/model_doc/flan-t5"
+                        style={{textDecoration: 'underline'}} target="_blank">FLAN-T5</a>. The model runs
                         on a private AWS server, so your data is protected from third parties. We will never sell any of
                         your personal information.
                     </p>
@@ -153,10 +154,10 @@ const Home: FC<Props> = () => {
                 This website is in active development.
                 Please help us by submitting feedback, reporting a bug, or requesting a feature in the following
                 form: <a href="https://forms.gle/MQfSRpz1TXPbv96W9"
-                   target="_blank"
-                   style={{textDecoration: 'underline'}}>
-                    Google Forms
-                </a>
+                         target="_blank"
+                         style={{textDecoration: 'underline'}}>
+                Google Forms
+            </a>
             </p>
         </FooterSection>
     </Container>
