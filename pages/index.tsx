@@ -16,6 +16,11 @@ const Home: FC<Props> = () => {
         router.push("/directory")
     }
 
+    const linkToGenerator = (e: MouseEvent) => {
+        e.preventDefault()
+        router.push("/generator")
+    }
+
     return <Container>
         <Welcome>
             <WelcomeText>
@@ -122,17 +127,37 @@ const Home: FC<Props> = () => {
         </InformationSection>
 
         <HowSection>
-            <H2>How does it work?</H2>
-            <p>
-                The Cover Letter Generator uses a fine-tuned large language model based on Google&rsquo;s
-                <a href="https://huggingface.co/docs/transformers/model_doc/flan-t5">FLAN-T5</a>. The model runs on a
-                private AWS server, so your data is protected from third parties. We will never sell any of your
-                personal information.
-            </p>
+            <HowCard primary={true}>
+                <div>
+                    <H2>How does it work?</H2>
+                    <p>
+                        The Cover Letter Generator uses AI to write a cover letter based on the examples saved in your
+                        Project Directory. It uses a fine-tuned large language model based on Google&rsquo;s <a
+                        href="https://huggingface.co/docs/transformers/model_doc/flan-t5">FLAN-T5</a>. The model runs
+                        on a private AWS server, so your data is protected from third parties. We will never sell any of
+                        your personal information.
+                    </p>
+                </div>
+                <NotReadyCard primary={false}>
+                    <p>
+                        This feature isn&rsquo;t quite ready yet. To be notified when it launches, please log in and
+                        submit your email in the <LinkSpan onClick={linkToGenerator}>Generator tab</LinkSpan>.
+                    </p>
+                </NotReadyCard>
+            </HowCard>
         </HowSection>
 
         <FooterSection>
-            <h3>UNCOVERED</h3>
+            <h3 style={{margin: '0.5rem'}}>UNCOVERED</h3>
+            <p style={{margin: '0', maxWidth: '40rem'}}>
+                This website is in active development.
+                Please help us by submitting feedback, reporting a bug, or requesting a feature in the following
+                form: <a href="https://forms.gle/MQfSRpz1TXPbv96W9"
+                   target="_blank"
+                   style={{textDecoration: 'underline'}}>
+                    Google Forms
+                </a>
+            </p>
         </FooterSection>
     </Container>
 }
@@ -228,7 +253,7 @@ const IconCarousel = styled(Card)`
     grid-template-columns: 1fr 1fr 1fr;
 
     width: 100%;
-    max-width: 70rem;
+    max-width: 1150px;
     padding: 2rem 0;
     margin: 0 2rem;
 
@@ -288,11 +313,49 @@ const FeatureHeader = styled.h2`
 
 const HowSection = styled(Section)`
     background: ${props => props.theme.colors.backgroundAlt};
+    padding: 3rem;
+
+    @media (max-width: 750px) {
+        padding: 2rem;
+    }
+
+    @media (max-width: 450px) {
+        padding: 0.8rem;
+    }
+`
+
+const HowCard = styled(Card)`
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1rem;
+    max-width: 1250px;
+    padding: 2rem 3rem;
+
+    @media (max-width: 750px) {
+        grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 450px) {
+        padding: 2rem;
+    }
+`
+
+const NotReadyCard = styled(Card)`
+    color: black;
+    padding: 2.5rem;
+    justify-content: center;
+`
+
+const LinkSpan = styled.span`
+    text-decoration: underline;
+    cursor: pointer;
 `
 
 const FooterSection = styled(Section)`
+    flex-direction: column;
     color: white;
     background: ${props => props.theme.colors.backgroundNegative};
+    padding: 4rem;
 `
 
 export default Home;
