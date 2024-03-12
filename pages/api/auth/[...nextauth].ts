@@ -75,3 +75,31 @@ async function refreshAccessToken(token) {
         return error
     }
 }
+
+export const authOptions = {
+    callbacks: {
+        async session({session, token}) {
+            return new Promise((Resolve, Reject) => {
+                session.user['bearerToken'] = token?.bearerToken
+                Resolve(session)
+            })
+        },
+        async jwt({token, account}) {
+            return new Promise(async (Resolve, Reject) => {
+                if (Date.now() > token?.expires) {
+                    const refreshedToken = await refreshAccessToken(token)
+                    token.accessToken = refreshedToken.accessToken
+                    token.bearerToken = refreshedToken.bearerToken
+                    token.refreshToken = refreshedToken.refreshToken
+                    token.expires = refreshedToken.bearerTokenExpires
+                } else {
+                    token.accessToken = account?.access_token ?? token.accessToken
+                    token.bearerToken = account?.id_token ?? token.bearerToken
+                    token.refreshToken = account?.refresh_token ?? token.refreshToken
+                    token.expires = account?.expires_at ?? token.expires
+                }
+                Resolve(token)
+            })
+        },
+    }
+}

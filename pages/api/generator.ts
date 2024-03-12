@@ -1,12 +1,13 @@
 // @ts-nocheck
 import {NextApiRequest, NextApiResponse} from "next"
-import {getSession} from "next-auth/react"
+import {getServerSession} from "next-auth/next"
 import AWS from "aws-sdk"
+import {authOptions} from "./auth/[...nextauth]"
 
 // TODO: create TS interfaces for ddb request params
 
 export default async function getGeneratorWaitlist(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const session = await getSession({req})
+    const session = await getServerSession(req, res, authOptions)
 
     if (session && ['PUT', 'DELETE'].includes(req.method ?? '')) {
         const login = `cognito-idp.${process.env.CLOUD_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
