@@ -6,7 +6,18 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <link rel="shortcut icon" href="/logo/favicon.ico" />
+                    <meta charSet="utf-8"/>
+                    <title>Uncovered: Achievement Tracker and Cover Letter Generator</title>
+                    <meta name="description"
+                          content="Track your projects and create custom cover letters using AI."/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+                    <meta property="og:title"
+                          content="Uncovered: track your achievements and generate custom cover letters"/>
+                    <meta property="og:type" content="website"/>
+                    <meta property="og:url" content="https://uncoveredapp.com/"/>
+                    {/*<meta property="og:image" content="img/indie-engineering-banner.png"/>*/}
+                    {/*<link rel="shortcut icon" href="/logo/favicon.ico"/>*/}
                 </Head>
                 <body>
                 <Main/>
